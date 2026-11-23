@@ -232,7 +232,7 @@ body.sem-scroll{overflow:hidden}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 'use strict';
-const VERSAO_APP = '5.1-drops';
+const VERSAO_APP = '5.2-voz';
 /* ---------------- utilidades ---------------- */
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
@@ -440,10 +440,25 @@ async function imgURL(id) {
   }
   return (IMG[id] = d || '');
 }
+/** Áudio natural (Gemini) guardado como Blob no aparelho → toca offline. */
+const AUD = {};
+async function audURL(id, baixar = true) {
+  if (!id) return '';
+  if (AUD[id]) return AUD[id];
+  let b = await DB.imgGet('aud:' + id).catch(() => null);
+  if (!b && baixar && navigator.onLine && S.cred) {
+    try {
+      const j = await apiGet({ action: 'audio', id });
+      const bin = atob(j.b64), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+      b = new Blob([u8], { type: j.mime || 'audio/wav' }); await DB.imgSet('aud:' + id, b);
+    } catch (e) { return ''; }
+  }
+  return b ? (AUD[id] = URL.createObjectURL(b)) : '';
+}
 async function baixarImagens() {
-  const lim = somaDias(isoDia(), 7);
-  const ids = ((B().revisao || {}).drops || []).filter(d => d.img && d.prox <= lim).map(d => d.img);
-  for (const id of ids) await imgURL(id);
+  const lim = somaDias(isoDia(), 7), R = B().revisao || {};
+  const itens = [...(R.drops || []), ...(R.flash || [])].filter(d => d.prox <= lim);
+  for (const d of itens) { if (d.img) await imgURL(d.img); if (d.aud) await audURL(d.aud); }
 }
 
 /* ---------------- navegação ---------------- */
@@ -511,7 +526,7 @@ TELAS.ajustes = (v) => {
   $('#vl').oninput = e => { S.local.vel = +e.target.value; $('#vlv').textContent = S.local.vel + '×'; salvarLocal(); };
   $('#vz').onchange = e => { S.local.voz = e.target.value; salvarLocal(); };
   $('#tst').onclick = () => Fala.falar('Olá, Bruno. Esta é a voz da sua revisão.', () => { });
-  $('#bx').onclick = async () => { $('#bxm').textContent = 'Baixando…'; await sincronizar(true); await baixarImagens(); $('#bxm').textContent = 'Pronto: ' + (await DB.imgKeys()).length + ' infográfico(s) no aparelho.'; };
+  $('#bx').onclick = async () => { $('#bxm').textContent = 'Baixando…'; await sincronizar(true); await baixarImagens(); const ks = await DB.imgKeys(); $('#bxm').textContent = 'Pronto: ' + ks.filter(k => !String(k).startsWith('aud:')).length + ' infográfico(s) e ' + ks.filter(k => String(k).startsWith('aud:')).length + ' áudio(s) no aparelho.'; };
   if ($('#rc')) $('#rc').onclick = () => { S.cred = null; Rota.render(); };
 };
 
@@ -655,7 +670,7 @@ TELAS.revisao = (v) => {
     ${R.pendentesGeracao ? `<p class="mut2 mpeq" style="margin:8px 2px">${R.pendentesGeracao} Drop(s) em produção para esta semana.</p>` : ''}
     <div class="sec"><h2>Hoje</h2>${fila.length ? '<button class="bt peq" id="ler">Revisar na tela</button>' : ''}</div>
     <div class="card"><div class="lista">${fila.map((x, i) => `<div class="item" data-i="${i}"><span class="chip ${x.kind === 'drop' ? 'ac' : 'rx'}">${rotulo(x)}</span>
-      <div class="mid"><div class="t">${esc(x.assunto)}</div><div class="mpeq mut">${esc(x.area || '')}${x.esp && x.esp !== x.area ? ' · ' + esc(x.esp) : ''}${x.erros ? ' · ' + x.erros + ' erro(s)' : ''}</div></div>${ico('seta', 18)}</div>`).join('') || '<div class="vazio">Nada para hoje. 🎉</div>'}</div></div>
+      <div class="mid">${x.aud ? '<span class="mpeq" title="voz natural">🎧</span> ' : ''}<div class="t">${esc(x.assunto)}</div><div class="mpeq mut">${esc(x.area || '')}${x.esp && x.esp !== x.area ? ' · ' + esc(x.esp) : ''}${x.erros ? ' · ' + x.erros + ' erro(s)' : ''}</div></div>${ico('seta', 18)}</div>`).join('') || '<div class="vazio">Nada para hoje. 🎉</div>'}</div></div>
     <div class="sec"><h2>Próximos</h2></div>
     <div class="card"><div class="lista">${prox.map(x => `<div class="lin esp peq"><span>${esc(x.assunto)} <span class="mut2">${rotulo(x)}</span></span><span class="num mut">${brDia(x.prox)}</span></div>`).join('') || '<div class="vazio">—</div>'}</div></div>`;
   $('#ouvir').onclick = () => Player.abrir(filaDoDia(), 0);
@@ -778,8 +793,14 @@ const Player = {
   },
   tocar() {
     this.tocando = true; this.acordar(); $('#plP').innerHTML = ico('pause', 34);
-    if (this.audio) this.audio.play().catch(() => { });
     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+    if (this.pausadoNoArquivo && this.audio) { // continua o áudio natural de onde parou
+      this.pausadoNoArquivo = false; this.emArquivo = true; this.fase('🔊 Resposta');
+      const tk = ++this.token, x = this.fila[this.i];
+      this.audio.onended = () => { this.silencio(); if (tk === this.token) { this.ouvidos.add(x.assunto); this.fase('✓'); this.timer = setTimeout(() => { if (tk === this.token) { this.i++; this.item(); } }, 3000); } };
+      this.audio.play().catch(() => this.item()); return;
+    }
+    if (this.audio) this.audio.play().catch(() => { });
     this.item();
   },
   resposta(x) {
@@ -788,6 +809,14 @@ const Player = {
     el.hidden = false; el.scrollTop = 0;
   },
   fase(t) { const el = $('#plFase'); if (el) el.textContent = t; },
+  /** Toca o áudio natural no MESMO elemento <audio> do silêncio (o iOS já liberou esse elemento no toque do Play). */
+  async arquivo(url, tk, fim) {
+    const a = this.audio; if (!a) return false;
+    a.onended = null; a.loop = false; a.src = url; a.volume = 1; a.currentTime = 0;
+    a.onended = () => { this.silencio(); if (tk === this.token) fim(); };
+    try { await a.play(); this.emArquivo = true; return true; } catch (e) { this.silencio(); return false; }
+  },
+  silencio() { const a = this.audio; if (!a) return; this.emArquivo = false; a.onended = null; a.loop = true; a.src = SILENCIO; a.volume = 0.01; if (this.tocando) a.play().catch(() => { }); },
   item() {
     clearTimeout(this.timer); clearInterval(this._cont);
     if (this.i >= this.fila.length) { this.concluir(); return; }
@@ -797,10 +826,17 @@ const Player = {
     Fala.falar(r.intro, () => {
       let falta = S.local.pausa; this.fase('💭 Pense… ' + falta + 's');
       this._cont = setInterval(() => { if (tk !== this.token) { clearInterval(this._cont); return; } falta--; if (falta > 0) this.fase('💭 Pense… ' + falta + 's'); }, 1000);
-      this.timer = setTimeout(() => {
+      this.timer = setTimeout(async () => {
         clearInterval(this._cont);
         if (tk !== this.token) return;
         this.resposta(x); this.fase('🔊 Resposta');
+        const url = x.aud ? await audURL(x.aud) : '';
+        if (tk !== this.token) return;
+        const depois = () => {
+          this.ouvidos.add(x.assunto); this.fase('✓');
+          this.timer = setTimeout(() => { if (tk === this.token) { this.i++; this.item(); } }, 3000);
+        };
+        if (url && await this.arquivo(url, tk, depois)) return;
         Fala.falar(r.resp || 'Este item ainda não tem texto de áudio.', () => {
           this.fase('✓');
           this.ouvidos.add(x.assunto);
@@ -811,11 +847,13 @@ const Player = {
   },
   pausar() {
     this.tocando = false; this.token++; clearTimeout(this.timer); clearInterval(this._cont); Fala.parar(); this.fase('⏸ Pausado');
+    if (this.audio) { if (this.emArquivo) { this.pausadoNoArquivo = true; this.audio.onended = null; } this.audio.pause(); }
     $('#plP').innerHTML = ico('play', 34); if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     if (this.lock) { this.lock.release().catch(() => { }); this.lock = null; }
   },
   ir(i) {
     if (i < 0 || i > this.fila.length) return;
+    this.pausadoNoArquivo = false; if (this.emArquivo) this.silencio();
     this.i = Math.min(i, this.fila.length - 1);
     if (this.tocando) this.item(); else this.mostrar();
   },

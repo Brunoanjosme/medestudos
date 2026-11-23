@@ -1,4 +1,4 @@
-/* MedEstudos 5 (Drops) — Codigo.gs — cole este arquivo inteiro. Gerado em 22/11/2026 20:23. */
+/* MedEstudos 5.2 (Drops + voz natural) — Codigo.gs — cole este arquivo inteiro. Gerado em 23/11/2026 12:28. */
 
 /* ======================================================================== Base ======================================================================== */
 /**
@@ -8,7 +8,7 @@
  */
 
 var TURBO = {
-  VERSAO: '5.0-drops',
+  VERSAO: '5.2-voz',
   PLANILHA_ID: '1DkxI51lciHJCKPrsg2CWpSDklEqcCanjxfFIKUO88Nw',
   ABAS: {
     CONFIG: 'Configurações', ASSUNTOS: 'Assuntos', SIMULADOS: 'Simulados', ERROS_SIM: 'Erros em simulados',
@@ -345,6 +345,7 @@ function T_rotear_(acao, dados, exigeToken) {
       case 'bootstrap': r = T_bootstrap_(String(dados.fresh || '') === '1'); break;
       case 'syncOutbox': r = T_syncOutbox_(dados); break;
       case 'imagem': r = T_imagem_(dados.id); break;
+      case 'audio': r = T_audio_(dados.id); break;
       case 'parseMapeamento': r = T_parseMapeamento_(dados.texto || ''); break;
       default: r = { ok: false, erro: 'ação desconhecida: ' + acao };
     }
@@ -678,7 +679,7 @@ function T_filaRevisao_() {
       kind: 'drop', id: String(r[0]), area: d.get(r, 'Grande Área'), esp: d.get(r, 'Especialidade'), assunto: d.get(r, 'Assunto'),
       serie: T_num_(d.get(r, 'Série (#)')) || 1, prox: prox, intervalo: T_num_(d.get(r, 'Intervalo (dias)')) || 0,
       facilidade: T_num_(d.get(r, 'Facilidade')) || T_FACIL_PADRAO, acertos: T_num_(d.get(r, 'Acertos')) || 0, erros: T_num_(d.get(r, 'Erros')) || 0,
-      img: T_idDoLink_(d.get(r, 'Link da Imagem')), doc: d.get(r, 'Link do Doc'),
+      img: T_idDoLink_(d.get(r, 'Link da Imagem')), doc: d.get(r, 'Link do Doc'), aud: T_idDoLink_(d.get(r, 'Link do Áudio')),
       leitura: prox <= horizonte ? String(d.get(r, 'Leitura (cache)') || '') : '',
       audio: prox <= horizonte ? String(d.get(r, 'Áudio (cache)') || '') : ''
     });
@@ -691,7 +692,7 @@ function T_filaRevisao_() {
     flash.push({
       kind: 'flash', id: String(r[0]), assunto: f.get(r, 'Assunto'), area: f.get(r, 'Grande Área'), prox: prox,
       intervalo: T_num_(f.get(r, 'Intervalo (dias)')) || 0, facilidade: T_num_(f.get(r, 'Facilidade')) || T_FACIL_PADRAO,
-      acertos: T_num_(f.get(r, 'Acertos')) || 0, erros: T_num_(f.get(r, 'Erros')) || 0,
+      acertos: T_num_(f.get(r, 'Acertos')) || 0, erros: T_num_(f.get(r, 'Erros')) || 0, aud: T_idDoLink_(f.get(r, 'Link do Áudio')),
       frente: prox <= horizonte ? String(f.get(r, 'Frente') || '') : '', verso: prox <= horizonte ? String(f.get(r, 'Verso') || '') : '',
       audio: prox <= horizonte ? String(f.get(r, 'Verso Áudio') || '') : ''
     });
@@ -835,6 +836,98 @@ function T_proxIdDrop_(t) {
   var max = 0;
   t.rows.forEach(function (r) { var m = String(r[0] || '').match(/^DRP-(\d+)/); if (m) max = Math.max(max, +m[1]); });
   return 'DRP-' + ('00' + (max + 1)).slice(-3);
+}
+
+/* ======================================================================== Voz ======================================================================== */
+/**
+ * MedEstudos 5 — Voz.gs
+ * Áudio natural e GRATUITO dos Drops (e flashcards) com o Gemini TTS (plano grátis da API do Google AI Studio).
+ * Chave: Projeto → Configurações do projeto → Propriedades do script → GEMINI_API_KEY.
+ * Gera um .wav (16 kHz, mono) por item, salva no Drive e grava "Link do Áudio" na planilha.
+ * O app baixa o arquivo, guarda no aparelho e toca offline (inclusive pelos comandos do carro).
+ */
+var T_VOZ = { MODELO: 'gemini-2.5-flash-preview-tts', VOZ: 'Kore', MAX_POR_RODADA: 6,
+  ESTILO: 'Leia em português do Brasil como um professor de medicina explicando com calma, clareza e entusiasmo, em ritmo natural de conversa, com pausas curtas entre os painéis. Leia todas as siglas e números por extenso. Texto:\n\n' };
+
+function T_chaveGemini_() {
+  var k = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  if (!k) throw new Error('Falta a chave: Configurações do projeto → Propriedades do script → GEMINI_API_KEY');
+  return k;
+}
+
+/** Texto limpo para narrar: tira marcações do modo leitura se não houver MODO ÁUDIO. */
+function T_textoNarrar_(t) {
+  return String(t || '').replace(/^#+\s*/gm, '').replace(/^\s*[-•]\s*/gm, '').replace(/\*\*/g, '').replace(/\$[^$]*\$/g, ' ')
+    .replace(/→/g, ', então, ').replace(/≥/g, ' maior ou igual a ').replace(/≤/g, ' menor ou igual a ').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+/** Chama o Gemini TTS e devolve um WAV 16 kHz mono 16 bits. */
+function T_tts_(texto) {
+  var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + T_VOZ.MODELO + ':generateContent?key=' + encodeURIComponent(T_chaveGemini_());
+  var corpo = { contents: [{ parts: [{ text: T_VOZ.ESTILO + texto }] }],
+    generationConfig: { responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: T_VOZ.VOZ } } } } };
+  var r = UrlFetchApp.fetch(url, { method: 'post', contentType: 'application/json', payload: JSON.stringify(corpo), muteHttpExceptions: true });
+  if (r.getResponseCode() !== 200) throw new Error('Gemini TTS ' + r.getResponseCode() + ': ' + r.getContentText().slice(0, 300));
+  var j = JSON.parse(r.getContentText()), parte = (((j.candidates || [])[0] || {}).content || {}).parts || [];
+  var dado = parte.filter(function (p) { return p.inlineData; })[0];
+  if (!dado) throw new Error('Gemini TTS sem áudio');
+  var m = String(dado.inlineData.mimeType || '').match(/rate=(\d+)/), taxa = m ? +m[1] : 24000;
+  return T_wav16k_(Utilities.base64Decode(dado.inlineData.data), taxa);
+}
+
+/** PCM s16le (taxa original) → WAV 16 kHz (interpolação linear: arquivo 1/3 menor, fala continua nítida). */
+function T_wav16k_(bytes, taxa) {
+  var n = Math.floor(bytes.length / 2), amostra = function (i) { var v = (bytes[2 * i] & 255) | (bytes[2 * i + 1] << 8); return v > 32767 ? v - 65536 : v; };
+  var alvo = 16000, passo = taxa / alvo, m = Math.floor(n / passo), out = new Array(44 + m * 2);
+  for (var i = 0; i < m; i++) {
+    var p = i * passo, a = Math.floor(p), f = p - a, s = Math.round(amostra(a) * (1 - f) + (a + 1 < n ? amostra(a + 1) : 0) * f);
+    s = Math.max(-32768, Math.min(32767, s)); var u = s < 0 ? s + 65536 : s;
+    out[44 + 2 * i] = (u & 255) > 127 ? (u & 255) - 256 : (u & 255); var h = (u >> 8) & 255; out[45 + 2 * i] = h > 127 ? h - 256 : h;
+  }
+  var w = function (o, txt) { for (var k = 0; k < 4; k++) out[o + k] = txt.charCodeAt(k); };
+  var u32 = function (o, v) { for (var k = 0; k < 4; k++) { var b = (v >>> (8 * k)) & 255; out[o + k] = b > 127 ? b - 256 : b; } };
+  var u16 = function (o, v) { out[o] = v & 255; out[o + 1] = (v >> 8) & 255; };
+  w(0, 'RIFF'); u32(4, 36 + m * 2); w(8, 'WAVE'); w(12, 'fmt '); u32(16, 16); u16(20, 1); u16(22, 1); u32(24, alvo); u32(28, alvo * 2); u16(32, 2); u16(34, 16); w(36, 'data'); u32(40, m * 2);
+  return out;
+}
+
+/** Gera áudios que faltam (Drops primeiro, depois flashcards). Roda nos gatilhos e pode ser executada à mão. */
+function gerarAudiosDrops() {
+  try { sincronizarDrops(); } catch (e) { Logger.log('sync: ' + e.message); }
+  T_garantirColunas_(TURBO.ABAS.DROPS, ['Link do Áudio']);
+  T_garantirColunas_(TURBO.ABAS.FLASH, ['Link do Áudio']);
+  var feitos = 0, erros = [], inicio = Date.now(), hoje = T_hoje_();
+  var raiz = DriveApp.getFolderById(T_cfgTxt_('Pasta Drops (ID)', ''));
+  var pastaFc = (function () { var it = raiz.getFoldersByName('Áudios dos flashcards'); return it.hasNext() ? it.next() : raiz.createFolder('Áudios dos flashcards'); })();
+  [[TURBO.ABAS.DROPS, 'drop'], [TURBO.ABAS.FLASH, 'flash']].forEach(function (par) {
+    var t = T_abrir_(par[0], false);
+    var fila = t.rows.map(function (r, k) { return k; }).filter(function (k) {
+      var r = t.rows[k]; return r[0] && T_norm_(t.get(r, 'Status')) === 'ativo' && !String(t.get(r, 'Link do Áudio') || '');
+    }).sort(function (a, b) { return String(T_dia_(t.get(t.rows[a], 'Próxima Revisão')) || hoje).localeCompare(String(T_dia_(t.get(t.rows[b], 'Próxima Revisão')) || hoje)); });
+    fila.forEach(function (k) {
+      if (feitos >= T_VOZ.MAX_POR_RODADA || Date.now() - inicio > 270000) return;
+      var r = t.rows[k], texto = par[1] === 'drop' ? (t.get(r, 'Áudio (cache)') || t.get(r, 'Leitura (cache)')) : (t.get(r, 'Verso Áudio') || t.get(r, 'Verso'));
+      texto = T_textoNarrar_(texto); if (texto.length < 40) return;
+      try {
+        var wav = T_tts_(texto), pasta = pastaFc;
+        if (par[1] === 'drop') { var doc = T_idDoLink_(t.get(r, 'Link do Doc')); if (doc) { var ps = DriveApp.getFileById(doc).getParents(); if (ps.hasNext()) pasta = ps.next(); } }
+        var nome = (par[1] === 'drop' ? 'DROP - ' + t.get(r, 'Assunto') + ' #' + (T_num_(t.get(r, 'Série (#)')) || 1) : 'FC - ' + r[0]) + ' (Áudio).wav';
+        var f = pasta.createFile(Utilities.newBlob(wav, 'audio/wav', nome));
+        t.set(k, 'Link do Áudio', f.getUrl()); feitos++;
+      } catch (e) { erros.push(r[0] + ': ' + e.message); if (/429|quota|RESOURCE_EXHAUSTED/i.test(e.message)) feitos = 999; }
+    });
+    T_gravar_(t);
+  });
+  T_cacheLimpar_();
+  var msg = 'Áudios gerados: ' + Math.min(feitos, T_VOZ.MAX_POR_RODADA) + (erros.length ? ' · erros: ' + erros.join(' | ') : '');
+  Logger.log(msg); return msg;
+}
+
+/** Áudio em base64 para o app guardar no aparelho. */
+function T_audio_(id) {
+  if (!id) return { ok: false, erro: 'sem id' };
+  var b = DriveApp.getFileById(id).getBlob();
+  return { ok: true, mime: 'audio/wav', b64: Utilities.base64Encode(b.getBytes()) };
 }
 
 /* ======================================================================== Cidade ======================================================================== */
@@ -1114,14 +1207,16 @@ function gerarPlanoSemanalDrops() {
 function instalarGatilhoDomingo() {
   ScriptApp.getProjectTriggers().forEach(function (t) { ScriptApp.deleteTrigger(t); });
   ScriptApp.newTrigger('gerarPlanoSemanalDrops').timeBased().onWeekDay(ScriptApp.WeekDay.SUNDAY).atHour(7).nearMinute(0).inTimezone('America/Bahia').create();
-  ScriptApp.newTrigger('sincronizarDrops').timeBased().everyDays(1).atHour(6).inTimezone('America/Bahia').create();
-  Logger.log('Gatilhos instalados: domingo 07:00 e diário 06:00.');
+  ScriptApp.newTrigger('gerarAudiosDrops').timeBased().everyDays(1).atHour(6).inTimezone('America/Bahia').create();
+  ScriptApp.newTrigger('gerarAudiosDrops').timeBased().everyDays(1).atHour(13).inTimezone('America/Bahia').create();
+  Logger.log('Gatilhos: domingo 07:00 (plano) · todo dia 06:00 e 13:00 (sincroniza Drive + gera áudios).');
 }
 
 /** Rode UMA vez depois de colar o código. Prepara colunas, configurações, token e gatilhos. */
 function setup() {
   T_tab_(TURBO.ABAS.FLASH, true);
-  T_garantirColunas_(TURBO.ABAS.DROPS, TURBO.COLS_DROPS);
+  T_garantirColunas_(TURBO.ABAS.DROPS, TURBO.COLS_DROPS.concat(['Link do Áudio']));
+  T_garantirColunas_(TURBO.ABAS.FLASH, ['Link do Áudio']);
   T_garantirColunas_(TURBO.ABAS.ASSUNTOS, TURBO.COLS_ASSUNTOS);
   T_garantirColunas_(TURBO.ABAS.ERROS_SIM, ['Subassunto', 'Pilar', 'Classe']);
   var sh = T_tab_(TURBO.ABAS.CONFIG, false), n = sh.getLastRow();
