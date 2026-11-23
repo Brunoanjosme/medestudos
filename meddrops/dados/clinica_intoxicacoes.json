@@ -1,0 +1,64 @@
+[
+  {
+    "id": "cm-intox-001",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações exógenas",
+    "titulo": "Síndrome Colinérgica (Organofosforados)",
+    "frente": "Quadro clínico clássico e antídoto de escolha na intoxicação por organofosforados?",
+    "verso": "Miose, sialorreia, broncorreia, bradicardia, fasciculações (muscarínico + nicotínico). Antídoto: Atropina (reverte efeitos muscarínicos; titular até secar secreções pulmonares) + Pralidoxima.",
+    "roteiroAudio": "Na intoxicação por organofosforados e carbamatos, ocorre inibição da acetilcolinesterase, gerando excesso de acetilcolina. O paciente apresenta a síndrome colinérgica: miose puntiforme, sudorese, sialorreia, broncorreia intensa e bradicardia. A prioridade absoluta é manter via aérea e administrar atropina em doses crescentes até secar a árvore brônquica. A pralidoxima reativa a enzima nos organofosforados, mas não deve atrasar a atropina.",
+    "audioUrl": "audios/cm-intox-001.mp3",
+    "tags": [
+      "antidoto",
+      "urgencia",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "cm-intox-002",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações exógenas",
+    "titulo": "Intoxicação por Paracetamol",
+    "frente": "Antídoto do paracetamol, quando indicar e como a gravidade é estimada?",
+    "verso": "Antídoto: N-acetilcisteína (repõe glutationa). Estimar risco pelo nomograma de Rumack-Matthew com nível sérico colhido ≥ 4 h após ingestão aguda única. Quanto mais precoce (idealmente < 8 h), maior a eficácia. Se tempo desconhecido ou ingestão crônica, tratar conforme dose/transaminases.",
+    "roteiroAudio": "O paracetamol em excesso esgota a glutationa e o metabólito NAPQI causa necrose hepática. Nas primeiras horas o paciente pode estar assintomático. O antídoto é a N-acetilcisteína, mais eficaz quando iniciada em até oito horas. Colha o nível sérico a partir de quatro horas da ingestão e use o nomograma de Rumack-Matthew para decidir.",
+    "audioUrl": "audios/cm-intox-002.mp3",
+    "tags": [
+      "antidoto",
+      "hepatologia",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "cm-intox-003",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações exógenas",
+    "titulo": "Opioides e Benzodiazepínicos",
+    "frente": "Antídotos de opioides e de benzodiazepínicos, e o principal cuidado com um deles?",
+    "verso": "Opioides: Naloxona (tríade: depressão respiratória, miose, rebaixamento). Benzodiazepínicos: Flumazenil — evitar em usuário crônico/coingestão de pró-convulsivantes (ex.: tricíclicos) pelo risco de convulsão; meia-vida curta, pode haver ressedação.",
+    "roteiroAudio": "Na intoxicação por opioides, pense na tríade de rebaixamento do nível de consciência, miose e depressão respiratória. O antídoto é a naloxona, titulada para restaurar a ventilação. Nos benzodiazepínicos, o antídoto é o flumazenil, mas ele pode precipitar convulsões em dependentes crônicos ou quando há coingestão de antidepressivos tricíclicos. Seu efeito é curto, então observe a ressedação.",
+    "audioUrl": "audios/cm-intox-003.mp3",
+    "tags": [
+      "antidoto",
+      "urgencia"
+    ]
+  },
+  {
+    "id": "cm-intox-004",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações exógenas",
+    "titulo": "Monóxido de Carbono",
+    "frente": "Conduta inicial na intoxicação por monóxido de carbono e por que o oxímetro de pulso engana?",
+    "verso": "Oxigênio 100% (máscara não reinalante/IOT se necessário) até normalizar a carboxihemoglobina; considerar câmara hiperbárica em casos graves (coma, síncope, isquemia cardíaca, gestante, COHb muito elevada). O oxímetro lê carboxi-Hb como oxi-Hb, portanto SatO2 falsamente normal — usar cooximetria.",
+    "roteiroAudio": "O monóxido de carbono tem afinidade pela hemoglobina cerca de duzentas vezes maior que o oxigênio. O oxímetro de pulso confunde carboxi-hemoglobina com oxi-hemoglobina e mostra saturação normal, por isso é preciso cooximetria. A conduta inicial é oxigênio a cem por cento, e a câmara hiperbárica é considerada nos casos graves, como coma, síncope, sofrimento cardíaco e gestação.",
+    "audioUrl": "audios/cm-intox-004.mp3",
+    "tags": [
+      "urgencia",
+      "armadilha"
+    ]
+  }
+]
