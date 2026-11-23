@@ -3,31 +3,33 @@
     "id": "cm-intox-001",
     "grandeArea": "Clínica Médica",
     "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
-    "titulo": "Síndrome Colinérgica (Organofosforados)",
-    "frente": "Quadro clínico clássico e antídoto de escolha na intoxicação por organofosforados?",
-    "verso": "Miose, sialorreia, broncorreia, bradicardia, fasciculações (muscarínico + nicotínico). Antídoto: Atropina (reverte efeitos muscarínicos; titular até secar secreções pulmonares) + Pralidoxima.",
-    "roteiroAudio": "Na intoxicação por organofosforados e carbamatos, ocorre inibição da acetilcolinesterase, gerando excesso de acetilcolina. O paciente apresenta a síndrome colinérgica: miose puntiforme, sudorese, sialorreia, broncorreia intensa e bradicardia. A prioridade absoluta é manter via aérea e administrar atropina em doses crescentes até secar a árvore brônquica. A pralidoxima reativa a enzima nos organofosforados, mas não deve atrasar a atropina.",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Atendimento Inicial (ABCDE) e Rastreio no Intoxicado",
+    "frente": "Qual é a sequência prioritária do atendimento inicial na sala vermelha ao paciente com suspeita de intoxicação exógena desconhecida?",
+    "verso": "Começar sempre pelo ABCDE antes do antídoto: (1) A/B: aspirar, posicionar, O2 e decidir via aérea definitiva; (2) C: monitor, 2 acessos e ECG de 12 derivações precoce (QRS largo = bloqueio de Na+/tricíclico; QTc longo; bradiarritmia); (3) D: glicemia capilar obrigatória, pupilas e temperatura; (4) Toxíndrome, história (cartelas, horário, intenção) e exames (gasometria com ânion gap, eletrólitos, função renal, CPK, beta-hCG, paracetamol e salicilato séricos); (5) Só então descontaminação, antídoto, eliminação aumentada e notificação no SINAN (tentativa de suicídio: notificação imediata em até 24 h). Rastreio de paracetamol sérico é obrigatório na ingestão desconhecida (pode ficar assintomático nas primeiras 24 h já com dose hepatotóxica).",
+    "roteiroAudio": "O atendimento inicial ao paciente com suspeita de intoxicação exógena começa sempre pelo ABCDE, e não pelo antídoto, porque o antídoto raramente salva quem já broncoaspirou ou entrou em hipóxia grave. Primeiro, nas letras A e B, você aspira a orofaringe, posiciona o paciente, oferece oxigênio e decide rapidamente pela via aérea definitiva se necessário. Na letra C, instala monitorização, garante dois acessos venosos calibrosos e faz um eletrocardiograma de doze derivações logo cedo, procurando alterações ameaçadoras à vida como complexo QRS alargado, que aponta bloqueio de canal de sódio por antidepressivo tricíclico, intervalo QT corrigido longo ou bradiarritmias. Na letra D, a glicemia capilar é obrigatória porque a hipoglicemia simula qualquer tipo de coma, além da avaliação de pupilas e temperatura. No passo seguinte, junta a toxíndrome com a história de cartelas, horário e intenção e solicita exames como gasometria com cálculo do ânion gap, eletrólitos, função renal, creatinofosfoquinase, teste de gravidez e dosagens de salicilato e paracetamol. O paracetamol entra no rastreio de toda intoxicação desconhecida porque o paciente pode ficar completamente assintomático nas primeiras vinte e quatro horas mesmo já tendo ingerido uma dose hepatotóxica. Só depois disso entram descontaminação, antídoto, eliminação aumentada e a notificação compulsória no SINAN, que na tentativa de suicídio deve ser imediata, em até vinte e quatro horas.",
     "audioUrl": "audios/cm-intox-001.mp3",
     "tags": [
-      "antidoto",
       "urgencia",
-      "alta-incidencia"
+      "abcde",
+      "alta-incidencia",
+      "notificacao"
     ]
   },
   {
     "id": "cm-intox-002",
     "grandeArea": "Clínica Médica",
     "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
-    "titulo": "Intoxicação por Paracetamol",
-    "frente": "Antídoto do paracetamol, quando indicar e como a gravidade é estimada?",
-    "verso": "Antídoto: N-acetilcisteína (repõe glutationa). Estimar risco pelo nomograma de Rumack-Matthew com nível sérico colhido ≥ 4 h após ingestão aguda única. Quanto mais precoce (idealmente < 8 h), maior a eficácia. Se tempo desconhecido ou ingestão crônica, tratar conforme dose/transaminases.",
-    "roteiroAudio": "O paracetamol em excesso esgota a glutationa e o metabólito NAPQI causa necrose hepática. Nas primeiras horas o paciente pode estar assintomático. O antídoto é a N-acetilcisteína, mais eficaz quando iniciada em até oito horas. Colha o nível sérico a partir de quatro horas da ingestão e use o nomograma de Rumack-Matthew para decidir.",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Caso Clínico: Via Aérea Definitiva no Intoxicado",
+    "frente": "Mulher de 27 anos encontrada sonolenta ao lado de cartelas desconhecidas chega com Glasgow 7, vômito em orofaringe, FR 10 irpm, SpO2 89% em ar ambiente, PA 104x66 mmHg, FC 92 bpm, pupilas médias fotorreagentes e glicemia 112 mg/dL. Conduta imediata e justificativa?",
+    "verso": "Conduta: aspiração da orofaringe seguida de intubação orotraqueal em sequência rápida. Justificativa: preenche os 3 critérios clássicos de via aérea definitiva: (1) incapacidade de proteger a via aérea (Glasgow <= 8 + vômito em orofaringe); (2) falência ventilatória (FR 10 irpm e SpO2 89%); (3) evolução clínica esperada de piora (substâncias e tempo de ingestão desconhecidos).",
+    "roteiroAudio": "Neste caso clínico, a conduta imediata é aspirar a orofaringe e realizar intubação orotraqueal em sequência rápida. A paciente reúne os três critérios clássicos de indicação de via aérea definitiva no paciente intoxicado. Primeiro, incapacidade de proteger a via aérea, caracterizada pela escala de coma de Glasgow igual a sete associada a vômito na orofaringe, gerando altíssimo risco de broncoaspiração. Segundo, falência ventilatória, evidente pela frequência respiratória baixa de dez incursões por minuto com saturação de oitenta e nove por cento em ar ambiente. Terceiro, evolução esperada de piora, já que não se sabe quais medicamentos foram ingeridos nem se a absorção continua em andamento. Como a glicemia está normal e não há sinais típicos de uma toxíndrome rapidamente reversível, proteger a via aérea vem antes de qualquer tentativa de descontaminação ou antídoto.",
     "audioUrl": "audios/cm-intox-002.mp3",
     "tags": [
-      "antidoto",
-      "hepatologia",
+      "caso-clinico",
+      "via-aerea",
+      "urgencia",
       "alta-incidencia"
     ]
   },
@@ -35,30 +37,163 @@
     "id": "cm-intox-003",
     "grandeArea": "Clínica Médica",
     "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
-    "titulo": "Opioides e Benzodiazepínicos",
-    "frente": "Antídotos de opioides e de benzodiazepínicos, e o principal cuidado com um deles?",
-    "verso": "Opioides: Naloxona (tríade: depressão respiratória, miose, rebaixamento). Benzodiazepínicos: Flumazenil — evitar em usuário crônico/coingestão de pró-convulsivantes (ex.: tricíclicos) pelo risco de convulsão; meia-vida curta, pode haver ressedação.",
-    "roteiroAudio": "Na intoxicação por opioides, pense na tríade de rebaixamento do nível de consciência, miose e depressão respiratória. O antídoto é a naloxona, titulada para restaurar a ventilação. Nos benzodiazepínicos, o antídoto é o flumazenil, mas ele pode precipitar convulsões em dependentes crônicos ou quando há coingestão de antidepressivos tricíclicos. Seu efeito é curto, então observe a ressedação.",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "O que Evitar na Sala Vermelha (VNI, Lavagem e Flumazenil)",
+    "frente": "Por que evitar ventilação não invasiva, lavagem gástrica imediata e 'teste do flumazenil' no paciente intoxicado com rebaixamento, vômitos e ingestão desconhecida?",
+    "verso": "VNI: contraindicação absoluta em rebaixamento + vômito/secreção (pressão positiva insufla o estômago e empurra conteúdo gástrico para o pulmão). Lavagem gástrica: fora da rotina; só considerar em ingestão potencialmente fatal < 1 h, de substância sem antídoto e SEMPRE com via aérea já protegida. Flumazenil: não existe 'teste do flumazenil' — na ingestão desconhecida pode precipitar convulsão refratária (coingestão de tricíclicos/pró-convulsivantes) ou abstinência grave (usuário crônico de BZD).",
+    "roteiroAudio": "Três erros clássicos na sala vermelha podem matar o paciente intoxicado com rebaixamento do nível de consciência e ingestão desconhecida. O primeiro é indicar ventilação não invasiva: rebaixamento e vômito ou secreção abundante são contraindicações absolutas, pois a máscara com pressão positiva empurra ar para o estômago e joga conteúdo gástrico diretamente para o pulmão, causando broncoaspiração grave. O segundo erro é correr para a lavagem gástrica: ela saiu da rotina médica e só é cogitada em ingestões potencialmente fatais ocorridas há menos de uma hora, de substâncias sem antídoto, e exclusivamente após a via aérea estar protegida por tubo orotraqueal. O terceiro erro é fazer o chamado teste do flumazenil: se houver coingestão de antidepressivo tricíclico, o flumazenil retira a proteção gabaérgica e desencadeia convulsões refratárias; se o paciente usar benzodiazepínico cronicamente, ele precipita abstinência aguda grave.",
     "audioUrl": "audios/cm-intox-003.mp3",
     "tags": [
-      "antidoto",
-      "urgencia"
+      "armadilha",
+      "via-aerea",
+      "urgencia",
+      "osce"
     ]
   },
   {
     "id": "cm-intox-004",
     "grandeArea": "Clínica Médica",
     "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
-    "titulo": "Monóxido de Carbono",
-    "frente": "Conduta inicial na intoxicação por monóxido de carbono e por que o oxímetro de pulso engana?",
-    "verso": "Oxigênio 100% (máscara não reinalante/IOT se necessário) até normalizar a carboxihemoglobina; considerar câmara hiperbárica em casos graves (coma, síncope, isquemia cardíaca, gestante, COHb muito elevada). O oxímetro lê carboxi-Hb como oxi-Hb, portanto SatO2 falsamente normal — usar cooximetria.",
-    "roteiroAudio": "O monóxido de carbono tem afinidade pela hemoglobina cerca de duzentas vezes maior que o oxigênio. O oxímetro de pulso confunde carboxi-hemoglobina com oxi-hemoglobina e mostra saturação normal, por isso é preciso cooximetria. A conduta inicial é oxigênio a cem por cento, e a câmara hiperbárica é considerada nos casos graves, como coma, síncope, sofrimento cardíaco e gestação.",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Panorama das 6 Toxíndromes e Barbitúricos",
+    "frente": "Quais são as 6 toxíndromes clássicas, seus sinais-chave e qual padrão diferencia a intoxicação por barbitúricos?",
+    "verso": "1) Simpaticomimética: midríase, pele úmida, FC/PA altas, agitação, convulsão (cocaína, anfetaminas, ecstasy). 2) Anticolinérgica: midríase, pele seca/quente/vermelha, FC/PA altas, delirium, retenção urinária, RHA reduzidos (atropina, escopolamina, Datura, anti-H1, tricíclicos). 3) Colinérgica: miose, pele úmida, broncorreia, broncoespasmo, bradicardia (ou taquicardia nicotínica), fasciculações (organofosforados, carbamatos, rivastigmina). 4) Opioide: miose puntiforme, pele normal/fria, bradipneia + coma (morfina, heroína, fentanil, tramadol). 5) Sedativo-hipnótica: pupilas normais ou miose leve, coma com sinais vitais pouco alterados (BZD, barbitúricos, álcool). 6) Serotoninérgica: midríase, pele úmida, FC/PA altas, clônus, hiperreflexia, diarreia (ISRS, IMAO, tramadol, linezolida). Barbitúricos: associam hipoventilação/apneia, hipotermia, hipotensão, miose e nistagmo.",
+    "roteiroAudio": "Toxíndrome é um conjunto de sinais clínicos que aponta para uma classe de tóxico mesmo sem saber o nome da substância. As seis toxíndromes principais formam a espinha dorsal da toxicologia. A simpaticomimética cursa com midríase, pele úmida, taquicardia, hipertensão, agitação e convulsão, típica de cocaína e anfetaminas. A anticolinérgica também tem midríase e taquicardia, mas com pele seca, quente e avermelhada, delirium, retenção urinária e ruídos hidroaéreos diminuídos. A colinérgica cursa com miose, pele muito úmida, broncorreia, broncoespasmo, bradicardia e fasciculações. A opioide apresenta miose puntiforme, coma e bradipneia marcante com resposta rápida à naloxona. A sedativo-hipnótica causa coma tranquilo com sinais vitais pouco alterados, como nos benzodiazepínicos e no álcool. Já a serotoninérgica combina midríase, sudorese, taquicardia, diarreia, hiperreflexia e clônus. Fique atento a um detalhe clássico dos barbitúricos: além do coma sedativo, eles costumam associar apneia ou hipoventilação, hipotermia, hipotensão, miose e nistagmo.",
     "audioUrl": "audios/cm-intox-004.mp3",
     "tags": [
-      "urgencia",
+      "toxindrome",
+      "alta-incidencia",
+      "diagnostico-diferencial"
+    ]
+  },
+  {
+    "id": "cm-intox-005",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Diagnóstico Diferencial: Toxíndromes com Midríase",
+    "frente": "Como diferenciar clinicamente e fisiopatologicamente as toxíndromes que cursam com midríase (simpaticomimética, anticolinérgica e serotoninérgica)?",
+    "verso": "Todas têm midríase, taquicardia, hipertensão, hipertermia e agitação (não diferenciam entre si). Simpaticomimética x Anticolinérgica: a chave é a PELE e os RHA. Simpaticomimética (cocaína, anfetaminas): pele ÚMIDA/sudoreica e RHA normais/preservados. Anticolinérgica (atropina, escopolamina, Datura, anti-H1, tricíclicos): pele SECA, quente e vermelha (glândulas sudoríparas recebem fibras simpáticas colinérgicas com receptor muscarínico, bloqueado pelo anticolinérgico), RHA diminuídos, retenção urinária e delirium. Serotoninérgica (ISRS, IMAO, tramadol, linezolida): pele úmida + CLÔNUS, hiperreflexia, diarreia e RHA aumentados.",
+    "roteiroAudio": "As três grandes toxíndromes excitatórias que cursam com midríase são a simpaticomimética, a anticolinérgica e a serotoninérgica. Todas elas compartilham midríase, taquicardia, hipertensão, hipertermia e agitação, por isso nenhum desses sinais isolados serve para diferenciá-las. O grande divisor de águas entre a simpaticomimética e a anticolinérgica é a pele. Na síndrome simpaticomimética, causada por cocaína ou anfetaminas, o excesso adrenérgico mantém as glândulas sudoríparas ativas, então o paciente fica sudoreico e com ruídos hidroaéreos presentes. Na síndrome anticolinérgica, causada por atropina, escopolamina, anti-histamínicos de primeira geração, chá de trombeta ou tricíclicos, a pele fica seca, quente e vermelha. Isso ocorre porque as glândulas sudoríparas são inervadas por fibras simpáticas que liberam acetilcolina em receptores muscarínicos; ao bloquear esse receptor, o anticolinérgico impede o suor, além de reduzir os ruídos hidroaéreos e causar retenção urinária e delirium. Já a síndrome serotoninérgica também tem pele úmida e midríase, mas se destaca pelo quadro neuromuscular de clônus e hiperreflexia associados a diarreia.",
+    "audioUrl": "audios/cm-intox-005.mp3",
+    "tags": [
+      "toxindrome",
+      "diagnostico-diferencial",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "cm-intox-006",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Diagnóstico Diferencial: Toxíndromes com Miose",
+    "frente": "Como diferenciar à beira do leito as toxíndromes que cursam com miose?",
+    "verso": "Principais: Opioide x Colinérgica. Opioide (morfina, heroína, fentanil, tramadol): miose puntiforme + BRADIPNEIA + coma + pele normal/fria + sem hipersecreção + resposta rápida à naloxona. Colinérgica (organofosforados, carbamatos, rivastigmina): miose + HIPERSECREÇÃO exuberante (sudorese, sialorreia, broncorreia, lacrimejamento), broncoespasmo, bradicardia (ou taquicardia nicotínica) e fasciculações + resposta à atropina. Lembrar também de barbitúricos: miose/pupilas normais + hipoventilação, hipotermia, hipotensão e nistagmo.",
+    "roteiroAudio": "Quando você encontra um paciente intoxicado com miose, as duas grandes hipóteses são a síndrome opioide e a síndrome colinérgica, e a diferenciação prática está nas secreções e no padrão respiratório. Na síndrome opioide, causada por morfina, heroína, fentanil ou tramadol, o paciente apresenta miose puntiforme, coma e bradipneia importante por depressão do centro respiratório, mas com pele normal ou fria e ausculta limpa, sem excesso de secreções, respondendo rapidamente à naloxona. Na síndrome colinérgica, causada por organofosforados, carbamatos ou anticolinesterásicos medicamentosos como a rivastigmina, o paciente também tem miose e frequentemente bradicardia, mas fica intensamente secretivo, com sudorese profusa, sialorreia, broncorreia afogando o pulmão, broncoespasmo, vômitos e fasciculações musculares, exigindo atropina. Por fim, nos barbitúricos, pode haver miose associada a hipoventilação, hipotermia, hipotensão e nistagmo.",
+    "audioUrl": "audios/cm-intox-006.mp3",
+    "tags": [
+      "toxindrome",
+      "diagnostico-diferencial",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "cm-intox-007",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Caso Clínico: Síndrome Anticolinérgica (Chá de Trombeta)",
+    "frente": "Jovem de 21 anos após 'chá de trombeta' apresenta agitação, alucinações ('catando objetos no ar'), FC 128 bpm, PA 150x90 mmHg, Tax 38,4 °C, midríase, pele quente/seca/avermelhada, RHA diminuídos, bexigoma e ECG com QRS 88 ms. Diagnóstico, conduta e o que evitar?",
+    "verso": "Diagnóstico: Síndrome anticolinérgica (Datura/Brugmansia contém escopolamina e hiosciamina — bloqueio muscarínico). Mnemônico: seca como osso, vermelha como beterraba, quente como lebre, cega como morcego, louca como chapeleiro + bexiga cheia e intestino parado. Outros agentes: anti-H1 de 1ª geração (difenidramina, prometazina), biperideno, escopolamina, tricíclicos, fenotiazinas. Conduta: suporte, resfriamento, sondagem vesical e BENZODIAZEPÍNICO IV (diazepam 5-10 mg ou midazolam). Fisostigmina: reservada ao delirium anticolinérgico puro e grave sob monitorização (CONTRAINDICADA se QRS largo/tricíclico por risco de bradicardia e assistolia). Evitar: haloperidol (efeito anticolinérgico, reduz limiar convulsivo, piora hipertermia, alarga QT), atropina (é outro anticolinérgico) e naloxona (não é opioide).",
+    "roteiroAudio": "Esse caso retrata a síndrome anticolinérgica clássica provocada pelo chá de trombeta, feito da planta Datura ou Brugmansia, rica em escopolamina e hiosciamina. O bloqueio dos receptores muscarínicos explica o mnemônico clássico: a paciente fica seca como um osso por ausência de suor e saliva, vermelha como beterraba pela vasodilatação cutânea, quente como uma lebre por não dissipar calor, cega como um morcego pela midríase e cicloplegia, e louca como um chapeleiro pelo delirium com alucinações visuais e o gesto típico de catar objetos no ar, além de retenção urinária e íleo paralítico. O tratamento de primeira linha consiste em suporte, ambiente calmo, resfriamento, sondagem vesical e benzodiazepínico endovenoso, como diazepam cinco a dez miligramas ou midazolam, que controla a agitação e previne hipertermia e rabdomiólise. A fisostigmina é o antídoto reservado ao delirium anticolinérgico puro e grave em ambiente monitorizado, mas é contraindicada quando o eletrocardiograma mostra QRS alargado por suspeita de tricíclico, pelo risco de bradicardia e assistolia. Devemos evitar haloperidol porque piora o bloqueio anticolinérgico, baixa o limiar convulsivo e alarga o intervalo QT; nunca usar atropina, que somaria mais veneno anticolinérgico; e não fazer naloxona, pois a pupila midriática afasta toxíndrome opioide.",
+    "audioUrl": "audios/cm-intox-007.mp3",
+    "tags": [
+      "caso-clinico",
+      "toxindrome",
+      "antidoto",
       "armadilha"
+    ]
+  },
+  {
+    "id": "cm-intox-008",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Caso Clínico: Síndrome Colinérgica Medicamentosa",
+    "frente": "Homem de 55 anos chega com sudorese profusa, sialorreia, broncorreia, vômitos, FC 46 bpm, hipotensão e miose após ingerir comprimidos de um familiar. Qual a toxíndrome, os medicamentos causadores, o manejo e por que descartar escopolamina, imipramina e loperamida?",
+    "verso": "Toxíndrome: Colinérgica muscarínica (mnemônico DUMBELS — os '3 Bs' matam: broncorreia, broncoespasmo, bradicardia) por inibição da acetilcolinesterase. Medicamentos domésticos causadores: anticolinesterásicos para Alzheimer (rivastigmina, donepezila, galantamina) e miastenia (neostigmina, piridostigmina). Manejo: atropina IV titulada até secar secreções pulmonares; por serem inibidores reversíveis, pralidoxima geralmente não é necessária. Diferenciais descartados: escopolamina e imipramina são anticolinérgicas (quadro oposto: pele seca, midríase, taquicardia); loperamida é opioide periférico que em doses maciças causa toxíndrome opioide e arritmias graves (QRS largo e QT longo).",
+    "roteiroAudio": "O paciente apresenta síndrome colinérgica de predomínio muscarínico, resumida no mnemônico DUMBELS: diarreia, incontinência urinária, miose, broncorreia, broncoespasmo, bradicardia, êmese, lacrimejamento, salivação e sudorese, sendo os três Bs — broncorreia, broncoespasmo e bradicardia — o que efetivamente mata o paciente. Ela decorre da inibição da enzima acetilcolinesterase com acúmulo de acetilcolina. Além dos agrotóxicos, medicamentos de uso doméstico causam exatamente esse quadro, como rivastigmina, donepezila e galantamina usados no Alzheimer, e neostigmina ou piridostigmina usados na miastenia gravis. O tratamento é atropina endovenosa titulada até secar a secreção pulmonar, geralmente sem necessidade de pralidoxima porque a inibição medicamentosa é reversível. Não pode ser escopolamina nem imipramina, pois ambas são anticolinérgicas e dariam pele seca, midríase e taquicardia. Também não é loperamida, que em doses maciças produz síndrome opioide sem hipersecreção e arritmias graves com alargamento do QRS e do intervalo QT.",
+    "audioUrl": "audios/cm-intox-008.mp3",
+    "tags": [
+      "caso-clinico",
+      "toxindrome",
+      "antidoto",
+      "diagnostico-diferencial"
+    ]
+  },
+  {
+    "id": "cm-intox-009",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Carvão Ativado: Critérios, Dose e Exceções (PHAILS)",
+    "frente": "Como age o carvão ativado, quais os 3 critérios para indicá-lo, qual a dose e quais substâncias NÃO são bem adsorvidas por ele?",
+    "verso": "Mecanismo: adsorção de moléculas orgânicas no lúmen intestinal, reduzindo absorção sistêmica. 3 requisitos: (1) Tempo ideal até 1 h da ingestão (estendido em liberação prolongada ou drogas que retardam esvaziamento gástrico, como anticolinérgicos e opioides); (2) Via aérea protegida (alerta/colaborativo ou já intubado — aspiração causa pneumonite grave); (3) Substância adsorvível (ex.: paracetamol). Dose: 1 g/kg VO ou por sonda (máx ~50 g no adulto). NÃO adsorve — PHAILS: Potássio/certos Pesticidas, Hidrocarbonetos, Ácidos/Álcalis cáusticos/Álcoois (etanol, metanol, etilenoglicol), Ferro (Iron) e outros metais, Lítio, Solventes.",
+    "roteiroAudio": "O carvão ativado é um pó com grande superfície porosa que adsorve moléculas orgânicas no trato gastrointestinal, impedindo que sejam absorvidas para o sangue. Para funcionar com segurança, ele exige três requisitos. Primeiro, tempo ideal de até uma hora após a ingestão, podendo ser estendido em medicamentos de liberação prolongada ou substâncias que lentificam o esvaziamento gástrico, como anticolinérgicos e opioides. Segundo, via aérea protegida, seja com paciente alerta e colaborativo ou já intubado, pois aspirar carvão provoca pneumonite química grave. Terceiro, substância adsorvível, como ocorre muito bem com o paracetamol. A dose é de um grama por quilo por via oral ou por sonda, até cerca de cinquenta gramas no adulto. O carvão não adsorve bem as substâncias do mnemônico PHAILS: potássio, hidrocarbonetos, ácidos e álcalis cáusticos, álcoois como etanol, metanol e etilenoglicol, ferro e metais pesados, lítio e solventes.",
+    "audioUrl": "audios/cm-intox-009.mp3",
+    "tags": [
+      "descontaminacao",
+      "alta-incidencia",
+      "armadilha"
+    ]
+  },
+  {
+    "id": "cm-intox-010",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Doses Múltiplas de Carvão, Irrigação Intestinal e Cáusticos",
+    "frente": "Quando indicar doses múltiplas de carvão ativado, quando preferir irrigação intestinal total e o que é contraindicado na descontaminação?",
+    "verso": "Doses múltiplas de carvão (a cada 4 h): drogas com circulação entero-hepática — carbamazepina, fenobarbital, dapsona, quinina e teofilina. Irrigação intestinal total (polietilenoglicol): grandes ingestões de substâncias não adsorvíveis (lítio, ferro) ou formulações de liberação prolongada. Contraindicações/abandonados: carvão em cáusticos (não adsorve, atrapalha a endoscopia e pode induzir vômito com nova queimadura esofágica); xarope de ipeca e indução de vômito foram abandonados.",
+    "roteiroAudio": "Além da dose única, existem duas estratégias especiais de descontaminação que caem muito em prova. As doses múltiplas de carvão ativado, feitas a cada quatro horas, são indicadas para medicamentos com circulação entero-hepática, atuando também para acelerar a eliminação: lembre dos cinco clássicos, carbamazepina, fenobarbital, dapsona, quinina e teofilina. Já a irrigação intestinal total com polietilenoglicol é a opção quando o carvão não adsorve a substância em ingestões maciças, como ferro e carbonato de lítio, ou em grandes ingestões de comprimidos de liberação prolongada. Nunca use carvão ativado em ingestão de soda cáustica ou ácidos, pois além de não adsorver, ele suja a mucosa impedindo a endoscopia digestiva e pode provocar vômitos com nova queimadura do esôfago. Por fim, o xarope de ipeca e qualquer indução de vômito estão totalmente abandonados.",
+    "audioUrl": "audios/cm-intox-010.mp3",
+    "tags": [
+      "descontaminacao",
+      "armadilha"
+    ]
+  },
+  {
+    "id": "cm-intox-011",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Alcalinização Urinária e Métodos Abandonados",
+    "frente": "Qual o mecanismo, as indicações e o cuidado eletrolítico essencial da alcalinização urinária, e por que diurese forçada e acidificação urinária não devem ser feitas?",
+    "verso": "Alcalinização urinária (bicarbonato IV até pH urinário 7,5-8,0): age por aprisionamento iônico — ácidos fracos em urina alcalina ficam ionizados, não são reabsorvidos pelo túbulo renal e saem na urina. Indicações: salicilatos (principal) e fenobarbital. Cuidado obrigatório: repor POTÁSSIO (com hipocalemia, o rim troca H+ por Na+ e impede a alcalinização da urina). Abandonados: diurese forçada com furosemida (não acelera eliminação relevante, não acelera etanol, causa edema pulmonar e distúrbios eletrolíticos); acidificação urinária (piora mioglobinúria e lesão renal).",
+    "roteiroAudio": "A alcalinização urinária é feita com bicarbonato de sódio venoso até manter o pH da urina entre sete vírgula cinco e oito. Ela se baseia no princípio do aprisionamento iônico: quando uma droga é um ácido fraco e encontra um meio alcalino no túbulo renal, ela fica na forma ionizada, não consegue atravessar a membrana para ser reabsorvida e acaba eliminada na urina. Esse método é indicado principalmente na intoxicação por salicilatos e também no fenobarbital. Um detalhe muito cobrado é a obrigação de repor potássio, porque na hipocalemia o rim troca íons hidrogênio por sódio para economizar potássio e a urina não alcaliniza. Já a diurese forçada com furosemida foi abandonada porque não acelera a eliminação de nada clinicamente útil — inclusive não acelera o etanol, metabolizado pelo fígado em velocidade fixa — e gera edema pulmonar e distúrbios eletrolíticos. A acidificação urinária também foi abandonada por piorar a mioglobinúria e a lesão renal aguda.",
+    "audioUrl": "audios/cm-intox-011.mp3",
+    "tags": [
+      "eliminacao-aumentada",
+      "armadilha",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "cm-intox-012",
+    "grandeArea": "Clínica Médica",
+    "subarea": "Toxicologia",
+    "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
+    "titulo": "Hemodiálise nas Intoxicações (I STUMBLE)",
+    "frente": "Quais características tornam um tóxico dialisável, quais são as principais substâncias removidas por hemodiálise e quais grandes classes NÃO dialisam?",
+    "verso": "Propriedades dialisáveis: baixo peso molecular, hidrossolúveis, baixa ligação a proteínas e pequeno volume de distribuição (ficam no compartimento vascular). Dialisáveis (I STUMBLE adaptado): Salicilatos, Teofilina, Metanol, Metformina (acidose láctica grave), Barbitúricos (fenobarbital), Lítio, Etilenoglicol + valproato e carbamazepina em casos graves. NÃO dialisam (lipossolúveis, alto volume de distribuição ou alta ligação proteica): tricíclicos, digoxina, benzodiazepínicos, betabloqueadores lipossolúveis e bloqueadores de canal de cálcio.",
+    "roteiroAudio": "Para que a hemodiálise consiga remover um tóxico com eficácia, a substância precisa permanecer acessível no sangue para atravessar o filtro. Por isso, toxinas dialisáveis têm baixo peso molecular, são hidrossolúveis, ligam-se pouco às proteínas plasmáticas e têm pequeno volume de distribuição. O contrário disso, ou seja, drogas lipossolúveis, muito ligadas a proteínas e com grande volume de distribuição, não responde à diálise. As principais substâncias dialisáveis formam o mnemônico adaptado I STUMBLE: salicilatos, teofilina, metanol, metformina quando há acidose láctica grave, barbitúricos como o fenobarbital, lítio e etilenoglicol, somando-se valproato e carbamazepina nos quadros graves. Por outro lado, não dialisam antidepressivos tricíclicos, digoxina, benzodiazepínicos, betabloqueadores lipossolúveis e bloqueadores de canal de cálcio.",
+    "audioUrl": "audios/cm-intox-012.mp3",
+    "tags": [
+      "eliminacao-aumentada",
+      "alta-incidencia",
+      "diagnostico-diferencial"
     ]
   }
 ]
+
