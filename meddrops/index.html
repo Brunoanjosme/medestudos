@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MedDrops — Flashcards &amp; Áudio</title>
+<meta name="description" content="Flashcards e áudio-drops de medicina, 100% offline.">
+<meta name="theme-color" content="#F5F5F2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MedDrops">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <h1>MedDrops</h1>
+      <p id="subtitle">Flashcards &amp; Áudio <span id="net" class="dot" title="conexão"></span></p>
+    </div>
+    <div class="bignum" aria-live="polite">
+      <b id="topCount">0</b>
+      <small>para hoje</small>
+    </div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="tabs" id="tabs" aria-label="Navegação">
+    <button data-act="tab" data-tab="hoje" class="on">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Hoje</span></button>
+    <button data-act="tab" data-tab="biblioteca">
+      <svg viewBox="0 0 24 24"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg><span>Biblioteca</span></button>
+    <button data-act="tab" data-tab="audio">
+      <svg viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="7" rx="2"/><rect x="17" y="13" width="4" height="7" rx="2"/></svg><span>Áudio</span></button>
+    <button data-act="tab" data-tab="ajustes">
+      <svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Ajustes</span></button>
+  </nav>
+  <div id="miniPlayer" class="mini" hidden></div>
+</div>
+<div id="sheet" class="sheet" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="fileIn" accept=".json,.csv,application/json,text/csv" multiple hidden>
+<input type="file" id="bkIn" accept=".json,application/json" hidden>
+<noscript>Este app precisa de JavaScript.</noscript>
+<script src="app.js"></script>
+</body>
+</html>

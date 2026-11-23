@@ -1,0 +1,61 @@
+[
+  {
+    "id": "go-pre-001",
+    "grandeArea": "Ginecologia e Obstetrícia",
+    "subarea": "Obstetrícia",
+    "assunto": "Pré-natal",
+    "titulo": "Suplementação de ácido fólico",
+    "frente": "Dose de ácido fólico na prevenção de defeitos do tubo neural e quando usar dose elevada?",
+    "verso": "Habitual: 400 mcg/dia, iniciando pelo menos 30 dias antes da concepção até o fim do 1º trimestre. Antecedente de filho com defeito do tubo neural (ou uso de anticonvulsivantes como valproato): dose elevada, 4 mg/dia (ou 5 mg conforme protocolo local).",
+    "roteiroAudio": "Para prevenir defeitos do tubo neural, a suplementação habitual é de quatrocentos microgramas de ácido fólico por dia, começando ao menos um mês antes da concepção e mantendo até o fim do primeiro trimestre. Mulheres com antecedente de filho com defeito do tubo neural precisam de dose elevada, de quatro miligramas por dia.",
+    "audioUrl": "audios/go-pre-001.mp3",
+    "tags": [
+      "prevencao",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "go-pre-002",
+    "grandeArea": "Ginecologia e Obstetrícia",
+    "subarea": "Obstetrícia",
+    "assunto": "Pré-natal",
+    "titulo": "Diabetes gestacional — rastreio",
+    "frente": "Como rastrear diabetes mellitus gestacional e quais os pontos de corte do TOTG 75 g?",
+    "verso": "Glicemia de jejum na 1ª consulta: ≥ 92 e < 126 mg/dL = DMG; ≥ 126 = diabetes prévio. Se normal, TOTG 75 g entre 24–28 semanas. DMG se: jejum ≥ 92, 1 h ≥ 180 ou 2 h ≥ 153 mg/dL (um valor alterado basta).",
+    "roteiroAudio": "No rastreio do diabetes gestacional, solicite glicemia de jejum na primeira consulta. Jejum a partir de noventa e dois já fecha diabetes gestacional, e a partir de cento e vinte e seis indica diabetes prévio. Se normal, faça o teste de tolerância com setenta e cinco gramas entre vinte e quatro e vinte e oito semanas. Basta um valor alterado: jejum maior ou igual a noventa e dois, uma hora maior ou igual a cento e oitenta, ou duas horas maior ou igual a cento e cinquenta e três.",
+    "audioUrl": "audios/go-pre-002.mp3",
+    "tags": [
+      "alta-incidencia",
+      "numeros"
+    ]
+  },
+  {
+    "id": "go-pre-003",
+    "grandeArea": "Ginecologia e Obstetrícia",
+    "subarea": "Obstetrícia",
+    "assunto": "Síndromes hipertensivas",
+    "titulo": "Pré-eclâmpsia e sulfato de magnésio",
+    "frente": "Critérios diagnósticos de pré-eclâmpsia e droga para prevenir/tratar eclâmpsia?",
+    "verso": "PA ≥ 140/90 mmHg após 20 semanas + proteinúria (≥ 300 mg/24 h ou relação P/C ≥ 0,3) OU disfunção orgânica (plaquetopenia, ↑ creatinina, ↑ transaminases, edema agudo de pulmão, sintomas cerebrais/visuais). Sulfato de magnésio é a droga de escolha; vigiar reflexo patelar, FR e diurese (antídoto: gluconato de cálcio).",
+    "roteiroAudio": "A pré-eclâmpsia é definida por pressão arterial maior ou igual a cento e quarenta por noventa após vinte semanas, associada a proteinúria ou a disfunção de órgão-alvo. O sulfato de magnésio é a droga de escolha para prevenir e tratar a eclâmpsia. Monitore reflexo patelar, frequência respiratória e diurese, e tenha gluconato de cálcio disponível como antídoto.",
+    "audioUrl": "audios/go-pre-003.mp3",
+    "tags": [
+      "urgencia",
+      "alta-incidencia"
+    ]
+  },
+  {
+    "id": "go-pre-004",
+    "grandeArea": "Ginecologia e Obstetrícia",
+    "subarea": "Obstetrícia",
+    "assunto": "Pré-natal",
+    "titulo": "Vacinação na gestação",
+    "frente": "Quais vacinas são indicadas na gestação e qual é contraindicada?",
+    "verso": "Indicadas: dTpa a partir de 20 semanas (cada gestação), influenza (sazonal) e hepatite B (se não imune); covid-19 conforme calendário vigente. Contraindicadas: vacinas de vírus vivo atenuado (ex.: tríplice viral, varicela, febre amarela salvo risco epidemiológico).",
+    "roteiroAudio": "Na gestação, vacine com dTpa a partir da vigésima semana a cada gravidez, influenza durante a sazonalidade e hepatite B se a gestante não for imune. As vacinas de vírus vivo atenuado, como tríplice viral e varicela, são contraindicadas.",
+    "audioUrl": "audios/go-pre-004.mp3",
+    "tags": [
+      "prevencao"
+    ]
+  }
+]
