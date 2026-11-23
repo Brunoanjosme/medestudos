@@ -211,6 +211,11 @@ body.sem-scroll{overflow:hidden}
 .pl-txt{padding:10px 4px}.pl-txt h2{font-size:1.15rem;margin:6px 0 2px}
 .pl-ctl{display:flex;justify-content:center;align-items:center;gap:34px;padding:6px 0}
 .pl-ctl button{background:none;border:0;color:var(--tx);padding:10px}.pl-ctl .pp{background:var(--ac);color:#141312;border-radius:50%;width:76px;height:76px;display:flex;align-items:center;justify-content:center}
+
+.pl-img{flex:1 1 0}
+.pl-resp{flex:1 1 0;min-height:0;overflow:auto;background:var(--s1);border:1px solid var(--s2);border-radius:14px;padding:12px 14px;font-size:.92rem;line-height:1.5;margin-bottom:6px}
+.pl-resp h3.h-doc{font-size:.95rem;margin:10px 0 2px;color:var(--ac2)}.pl-resp ul{padding-left:18px;margin:2px 0}
+.pl-fase{text-align:center;font-size:.85rem;color:var(--tx2);min-height:1.2em}
 </style>
 </head>
 <body>
@@ -227,7 +232,7 @@ body.sem-scroll{overflow:hidden}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 'use strict';
-const VERSAO_APP = '5.0-drops';
+const VERSAO_APP = '5.1-drops';
 /* ---------------- utilidades ---------------- */
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
@@ -493,7 +498,8 @@ TELAS.ajustes = (v) => {
   v.innerHTML = `<div class="card col">
       <h3>Modo áudio</h3>
       <label class="campo">Pausa para pensar: <b id="pzv">${S.local.pausa}s</b><input type="range" min="5" max="15" step="1" id="pz" value="${S.local.pausa}"></label>
-      <label class="campo">Voz<select id="vz"><option value="">Automática (pt-BR)</option>${vozes.map(x => `<option ${x.name === S.local.voz ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>
+      <label class="campo">Voz<select id="vz"><option value="">Automática (a melhor instalada)</option>${vozes.slice().sort((a, b) => Fala.nota(b) - Fala.nota(a)).map(x => `<option value="${esc(x.name)}" ${x.name === S.local.voz ? 'selected' : ''}>${esc(x.name)}${Fala.nota(x) >= 20 ? ' ★' : ''}</option>`).join('')}</select></label>
+      <p class="mut2 mpeq">Voz robótica? No iPhone: Ajustes › Acessibilidade › Conteúdo Falado › Vozes › Português (Brasil) › baixe <b>Luciana</b> ou <b>Felipe</b> na versão <b>Aprimorada</b> (ou Premium). Depois feche e abra o app: ela é escolhida sozinha (★).</p>
       <label class="campo">Velocidade: <b id="vlv">${S.local.vel || 1}×</b><input type="range" min="0.8" max="1.4" step="0.05" id="vl" value="${S.local.vel || 1}"></label>
       <button class="bt" id="tst">🔊 Testar voz</button></div>
     <div class="card col"><h3>Offline</h3><p class="mut peq">Textos e infográficos dos próximos 7 dias ficam no aparelho. Abra o app com internet antes de viajar.</p>
@@ -683,24 +689,36 @@ function zoom(u) {
 
 /* ---------- Fala: Web Speech API pt-BR (offline com a voz do aparelho) ---------- */
 const Fala = {
+  _vivas: [], // o iOS descarta utterances sem referência e o onend nunca dispara
   vozes() { return (speechSynthesis.getVoices() || []).filter(x => /^pt/i.test(x.lang)); },
-  voz() { const vs = this.vozes(); return vs.find(x => x.name === S.local.voz) || vs.find(x => /pt[-_]BR/i.test(x.lang) && /luciana|google|francisca|felipe/i.test(x.name)) || vs.find(x => /pt[-_]BR/i.test(x.lang)) || vs[0] || null; },
+  /** Qualidade da voz: Premium > Aprimorada/Enhanced > comum. As compactas soam robóticas. */
+  nota(v) { const n = v.name + ' ' + (v.voiceURI || ''); return (/premium/i.test(n) ? 30 : /aprimorad|enhanced|neural|natural/i.test(n) ? 20 : 0) + (/pt[-_]BR/i.test(v.lang) ? 5 : 0) + (/google/i.test(n) ? 3 : 0) + (/compact/i.test(n) ? -10 : 0); },
+  voz() { const vs = this.vozes(); return vs.find(x => x.name === S.local.voz) || vs.slice().sort((a, b) => this.nota(b) - this.nota(a))[0] || null; },
   /** Quebra em frases (≤ 220 caracteres): evita o corte de falas longas em alguns navegadores. */
   pedacos(t) {
-    const fr = String(t || '').replace(/\*\*/g, '').replace(/\s+/g, ' ').match(/[^.!?;:]+[.!?;:]*/g) || [];
+    const fr = String(t || '').replace(/\*\*/g, '').replace(/\s+/g, ' ').match(/[^.!?]+[.!?]*/g) || [];
     const out = []; fr.forEach(f => { f = f.trim(); if (!f) return; while (f.length > 220) { const k = f.lastIndexOf(',', 220) > 60 ? f.lastIndexOf(',', 220) + 1 : 220; out.push(f.slice(0, k)); f = f.slice(k).trim(); } if (f) out.push(f); });
     return out;
   },
+  parar() { if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); },
   falar(texto, fim, token) {
-    const ps = this.pedacos(texto); let i = 0;
+    const ps = this.pedacos(texto); let i = 0, vigia = null;
+    const vivo = () => !token || token === Player.token;
     const prox = () => {
-      if (token && token !== Player.token) return;
+      clearTimeout(vigia);
+      if (!vivo()) return;
       if (i >= ps.length) { fim(); return; }
-      const u = new SpeechSynthesisUtterance(ps[i++]); u.lang = 'pt-BR'; u.rate = S.local.vel || 1; const vz = this.voz(); if (vz) u.voice = vz;
-      u.onend = prox; u.onerror = e => { if (e.error !== 'interrupted' && e.error !== 'canceled') prox(); };
+      const frase = ps[i++], u = new SpeechSynthesisUtterance(frase);
+      u.lang = 'pt-BR'; u.rate = S.local.vel || 1; const vz = this.voz(); if (vz) u.voice = vz;
+      let feito = false; const seguir = () => { if (feito) return; feito = true; this._vivas = this._vivas.filter(x => x !== u); prox(); };
+      u.onend = seguir; u.onerror = e => { if (e.error !== 'interrupted' && e.error !== 'canceled') seguir(); };
+      this._vivas.push(u);
       speechSynthesis.speak(u);
+      // vigia: se o iOS não disparar onend, segue sozinho depois do tempo estimado da frase
+      vigia = setTimeout(() => { if (vivo() && !speechSynthesis.speaking) seguir(); }, 4000 + frase.length * 90 / (S.local.vel || 1));
     };
-    speechSynthesis.cancel(); prox();
+    // iOS: cancel() seguido de speak() no mesmo instante engole a fala nova → só cancela se precisar e espera
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(prox, 350); } else prox();
   }
 };
 if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = () => { };
@@ -721,6 +739,7 @@ const Player = {
     const el = document.createElement('div'); el.id = 'player';
     el.innerHTML = `<div class="pl-top"><button id="plX" aria-label="Fechar">${ico('fechar')}</button><span id="plN" class="mut peq"></span><span></span></div>
       <div id="plImg" class="pl-img"></div><div class="pl-txt"><div id="plTag" class="chips"></div><h2 id="plT"></h2><p id="plE" class="mut peq"></p></div>
+      <div id="plR" class="pl-resp" hidden></div><div id="plFase" class="pl-fase"></div>
       <div class="pl-ctl"><button id="plA">${ico('ant', 30)}</button><button id="plP" class="pp">${ico('pause', 34)}</button><button id="plS">${ico('prox', 30)}</button></div>`;
     document.body.appendChild(el); document.body.classList.add('sem-scroll');
     $('#plX').onclick = () => this.fechar(); $('#plA').onclick = () => this.ir(this.i - 1); $('#plS').onclick = () => this.ir(this.i + 1);
@@ -742,6 +761,7 @@ const Player = {
     const x = this.fila[this.i];
     $('#plN').textContent = (this.i + 1) + ' / ' + this.fila.length;
     $('#plTag').innerHTML = `<span class="chip ${x.kind === 'drop' ? 'ac' : 'rx'}">${rotulo(x)}</span><span class="chip">${esc(x.area || '')}</span>`;
+    $('#plR').hidden = true; $('#plR').innerHTML = ''; $('#plFase').textContent = '';
     $('#plT').textContent = x.assunto; $('#plE').textContent = x.kind === 'drop' ? GATILHO : String(x.frente || '').replace(/\*\*/g, '');
     const u = x.kind === 'drop' ? await imgURL(x.img) : '';
     if (this.fila[this.i] !== x) return;
@@ -752,9 +772,9 @@ const Player = {
     }
   },
   roteiro(x) {
-    const intro = x.kind === 'drop' ? 'Drop: ' + x.assunto + '. ' + GATILHO : 'Flashcard de ' + x.assunto + '. ' + String(x.frente || '');
+    const intro = x.kind === 'drop' ? 'Drop de ' + (x.area || '') + '. ' + x.assunto + '. ' + GATILHO : 'Flashcard de ' + x.assunto + '. ' + String(x.frente || '');
     const resp = x.kind === 'drop' ? (x.audio || x.leitura || '') : (x.audio || x.verso || '');
-    return { intro, resp: String(resp).replace(/^### /gm, '').replace(/^\s*- /gm, '') };
+    return { intro, resp: String(resp).replace(/^### /gm, '').replace(/^\s*- /gm, '').replace(/\*\*/g, '').replace(/→/g, ', então ').replace(/≥/g, ' maior ou igual a ').replace(/≤/g, ' menor ou igual a ').replace(/</g, ' menor que ').replace(/>/g, ' maior que ').replace(/\$[^$]*\$/g, ' ') };
   },
   tocar() {
     this.tocando = true; this.acordar(); $('#plP').innerHTML = ico('pause', 34);
@@ -762,15 +782,27 @@ const Player = {
     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
     this.item();
   },
+  resposta(x) {
+    const el = $('#plR'); if (!el) return;
+    el.innerHTML = md2(x.kind === 'drop' ? (x.leitura || x.audio) : x.verso) || '<p class="mut">Sem texto.</p>';
+    el.hidden = false; el.scrollTop = 0;
+  },
+  fase(t) { const el = $('#plFase'); if (el) el.textContent = t; },
   item() {
-    clearTimeout(this.timer);
+    clearTimeout(this.timer); clearInterval(this._cont);
     if (this.i >= this.fila.length) { this.concluir(); return; }
     const tk = ++this.token, x = this.fila[this.i], r = this.roteiro(x);
     this.mostrar();
+    this.fase('🔊 Pergunta');
     Fala.falar(r.intro, () => {
+      let falta = S.local.pausa; this.fase('💭 Pense… ' + falta + 's');
+      this._cont = setInterval(() => { if (tk !== this.token) { clearInterval(this._cont); return; } falta--; if (falta > 0) this.fase('💭 Pense… ' + falta + 's'); }, 1000);
       this.timer = setTimeout(() => {
+        clearInterval(this._cont);
         if (tk !== this.token) return;
+        this.resposta(x); this.fase('🔊 Resposta');
         Fala.falar(r.resp || 'Este item ainda não tem texto de áudio.', () => {
+          this.fase('✓');
           this.ouvidos.add(x.assunto);
           this.timer = setTimeout(() => { if (tk === this.token) { this.i++; this.item(); } }, 3000);
         }, tk);
@@ -778,7 +810,7 @@ const Player = {
     }, tk);
   },
   pausar() {
-    this.tocando = false; this.token++; clearTimeout(this.timer); speechSynthesis.cancel();
+    this.tocando = false; this.token++; clearTimeout(this.timer); clearInterval(this._cont); Fala.parar(); this.fase('⏸ Pausado');
     $('#plP').innerHTML = ico('play', 34); if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     if (this.lock) { this.lock.release().catch(() => { }); this.lock = null; }
   },
