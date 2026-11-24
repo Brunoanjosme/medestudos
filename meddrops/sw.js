@@ -1,5 +1,5 @@
 /* MedDrops — service worker. Shell em cache; dados: rede primeiro, cache como reserva. Áudios ficam no IndexedDB. */
-const CACHE = 'meddrops-v2';
+const CACHE = 'meddrops-v3';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
   './dados/manifesto.json'];
