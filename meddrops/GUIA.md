@@ -26,7 +26,8 @@ meddrops/
 
 Atalho sem GitHub: salve o arquivo no iPhone e use **Ajustes › Importar .json ou .csv** (fica só naquele aparelho).
 
-## 3. Instruções para a IA (copie e cole)
+## 3. Instruções para a IA
+Use o prompt completo e atualizado em **PROMPT_IA.md** (esta seção abaixo é a versão curta antiga).
 
 ```
 Você vai criar flashcards de medicina para o app MedDrops. Entregue APENAS um arquivo JSON válido

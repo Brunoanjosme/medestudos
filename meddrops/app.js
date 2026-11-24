@@ -116,8 +116,13 @@ async function upsertCards(list, source, replaceRepo) {
   await reloadCards();
   return uniq.length;
 }
+function canon() {
+  const seen = {}, pick = (lv, v) => { const k = lv + '|' + norm(v).replace(/\s+/g, ' '); return seen[k] ||= v; };
+  S.cards.forEach(c => { c.grandeArea = pick(1, c.grandeArea); c.subarea = pick(2, subOf(c)); c.assunto = pick(3, c.assunto); });
+}
 async function reloadCards() {
   S.cards = (await DB.all('cards')).sort((a, b) => a.grandeArea.localeCompare(b.grandeArea) || subOf(a).localeCompare(subOf(b)) || a.assunto.localeCompare(b.assunto) || a.id.localeCompare(b.id));
+  canon(); // grafias que só diferem em maiúsculas/acentos viram a mesma categoria
   S.byId = new Map(S.cards.map(c => [c.id, c]));
   pruneSel();
   buildQueue();
