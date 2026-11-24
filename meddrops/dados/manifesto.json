@@ -6,12 +6,12 @@
     {
       "arquivo": "clinica_intoxicacoes.json",
       "grandeArea": "Clínica Médica",
-      "assunto": "Intoxicações exógenas"
+      "subarea": "Toxicologia clínica"
     },
     {
       "arquivo": "go_prenatal.json",
       "grandeArea": "Ginecologia e Obstetrícia",
-      "assunto": "Pré-natal"
+      "subarea": "Pré-natal"
     }
   ]
 }

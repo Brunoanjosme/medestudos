@@ -2,8 +2,8 @@
   {
     "id": "cm-intox-001",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
+    "subarea": "Toxicologia clínica",
+    "assunto": "Organofosforados",
     "titulo": "Síndrome Colinérgica (Organofosforados)",
     "frente": "Quadro clínico clássico e antídoto de escolha na intoxicação por organofosforados?",
     "verso": "Miose, sialorreia, broncorreia, bradicardia, fasciculações (muscarínico + nicotínico). Antídoto: Atropina (reverte efeitos muscarínicos; titular até secar secreções pulmonares) + Pralidoxima.",
@@ -18,8 +18,8 @@
   {
     "id": "cm-intox-002",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
+    "subarea": "Toxicologia clínica",
+    "assunto": "Paracetamol",
     "titulo": "Intoxicação por Paracetamol",
     "frente": "Antídoto do paracetamol, quando indicar e como a gravidade é estimada?",
     "verso": "Antídoto: N-acetilcisteína (repõe glutationa). Estimar risco pelo nomograma de Rumack-Matthew com nível sérico colhido ≥ 4 h após ingestão aguda única. Quanto mais precoce (idealmente < 8 h), maior a eficácia. Se tempo desconhecido ou ingestão crônica, tratar conforme dose/transaminases.",
@@ -34,8 +34,8 @@
   {
     "id": "cm-intox-003",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
+    "subarea": "Toxicologia clínica",
+    "assunto": "Opioides e benzodiazepínicos",
     "titulo": "Opioides e Benzodiazepínicos",
     "frente": "Antídotos de opioides e de benzodiazepínicos, e o principal cuidado com um deles?",
     "verso": "Opioides: Naloxona (tríade: depressão respiratória, miose, rebaixamento). Benzodiazepínicos: Flumazenil — evitar em usuário crônico/coingestão de pró-convulsivantes (ex.: tricíclicos) pelo risco de convulsão; meia-vida curta, pode haver ressedação.",
@@ -49,8 +49,8 @@
   {
     "id": "cm-intox-004",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
-    "assunto": "Intoxicações exógenas",
+    "subarea": "Toxicologia clínica",
+    "assunto": "Monóxido de carbono",
     "titulo": "Monóxido de Carbono",
     "frente": "Conduta inicial na intoxicação por monóxido de carbono e por que o oxímetro de pulso engana?",
     "verso": "Oxigênio 100% (máscara não reinalante/IOT se necessário) até normalizar a carboxihemoglobina; considerar câmara hiperbárica em casos graves (coma, síncope, isquemia cardíaca, gestante, COHb muito elevada). O oxímetro lê carboxi-Hb como oxi-Hb, portanto SatO2 falsamente normal — usar cooximetria.",
