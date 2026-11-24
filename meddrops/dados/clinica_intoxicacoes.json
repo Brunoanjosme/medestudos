@@ -2,7 +2,7 @@
   {
     "id": "cm-intox-001",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Atendimento Inicial (ABCDE) e Rastreio no Intoxicado",
     "frente": "Qual é a sequência prioritária do atendimento inicial na sala vermelha ao paciente com suspeita de intoxicação exógena desconhecida?",
@@ -19,7 +19,7 @@
   {
     "id": "cm-intox-002",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Caso Clínico: Via Aérea Definitiva no Intoxicado",
     "frente": "Mulher de 27 anos encontrada sonolenta ao lado de cartelas desconhecidas chega com Glasgow 7, vômito em orofaringe, FR 10 irpm, SpO2 89% em ar ambiente, PA 104x66 mmHg, FC 92 bpm, pupilas médias fotorreagentes e glicemia 112 mg/dL. Conduta imediata e justificativa?",
@@ -36,7 +36,7 @@
   {
     "id": "cm-intox-003",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "O que Evitar na Sala Vermelha (VNI, Lavagem e Flumazenil)",
     "frente": "Por que evitar ventilação não invasiva, lavagem gástrica imediata e 'teste do flumazenil' no paciente intoxicado com rebaixamento, vômitos e ingestão desconhecida?",
@@ -53,7 +53,7 @@
   {
     "id": "cm-intox-004",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Panorama das 6 Toxíndromes e Barbitúricos",
     "frente": "Quais são as 6 toxíndromes clássicas, seus sinais-chave e qual padrão diferencia a intoxicação por barbitúricos?",
@@ -69,7 +69,7 @@
   {
     "id": "cm-intox-005",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Diagnóstico Diferencial: Toxíndromes com Midríase",
     "frente": "Como diferenciar clinicamente e fisiopatologicamente as toxíndromes que cursam com midríase (simpaticomimética, anticolinérgica e serotoninérgica)?",
@@ -85,7 +85,7 @@
   {
     "id": "cm-intox-006",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Diagnóstico Diferencial: Toxíndromes com Miose",
     "frente": "Como diferenciar à beira do leito as toxíndromes que cursam com miose?",
@@ -101,7 +101,7 @@
   {
     "id": "cm-intox-007",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Caso Clínico: Síndrome Anticolinérgica (Chá de Trombeta)",
     "frente": "Jovem de 21 anos após 'chá de trombeta' apresenta agitação, alucinações ('catando objetos no ar'), FC 128 bpm, PA 150x90 mmHg, Tax 38,4 °C, midríase, pele quente/seca/avermelhada, RHA diminuídos, bexigoma e ECG com QRS 88 ms. Diagnóstico, conduta e o que evitar?",
@@ -118,7 +118,7 @@
   {
     "id": "cm-intox-008",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Caso Clínico: Síndrome Colinérgica Medicamentosa",
     "frente": "Homem de 55 anos chega com sudorese profusa, sialorreia, broncorreia, vômitos, FC 46 bpm, hipotensão e miose após ingerir comprimidos de um familiar. Qual a toxíndrome, os medicamentos causadores, o manejo e por que descartar escopolamina, imipramina e loperamida?",
@@ -135,7 +135,7 @@
   {
     "id": "cm-intox-009",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Carvão Ativado: Critérios, Dose e Exceções (PHAILS)",
     "frente": "Como age o carvão ativado, quais os 3 critérios para indicá-lo, qual a dose e quais substâncias NÃO são bem adsorvidas por ele?",
@@ -151,7 +151,7 @@
   {
     "id": "cm-intox-010",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Doses Múltiplas de Carvão, Irrigação Intestinal e Cáusticos",
     "frente": "Quando indicar doses múltiplas de carvão ativado, quando preferir irrigação intestinal total e o que é contraindicado na descontaminação?",
@@ -166,7 +166,7 @@
   {
     "id": "cm-intox-011",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Alcalinização Urinária e Métodos Abandonados",
     "frente": "Qual o mecanismo, as indicações e o cuidado eletrolítico essencial da alcalinização urinária, e por que diurese forçada e acidificação urinária não devem ser feitas?",
@@ -182,7 +182,7 @@
   {
     "id": "cm-intox-012",
     "grandeArea": "Clínica Médica",
-    "subarea": "Toxicologia",
+    "subarea": "Toxicologia Clínica",
     "assunto": "Intoxicações: Estabilização Inicial e Antídotos de Primeira Hora",
     "titulo": "Hemodiálise nas Intoxicações (I STUMBLE)",
     "frente": "Quais características tornam um tóxico dialisável, quais são as principais substâncias removidas por hemodiálise e quais grandes classes NÃO dialisam?",
@@ -194,8 +194,7 @@
       "alta-incidencia",
       "diagnostico-diferencial"
     ]
-  }
-
+  },
   {
     "id": "cm-intox-013",
     "grandeArea": "Clínica Médica",
@@ -445,8 +444,7 @@
       "osce",
       "armadilha"
     ]
-  }
-
+  },
   {
     "id": "cm-intox-028",
     "grandeArea": "Clínica Médica",
@@ -630,8 +628,7 @@
       "diagnostico-diferencial",
       "armadilha"
     ]
-  }
-
+  },
   {
     "id": "cm-intox-039",
     "grandeArea": "Clínica Médica",
@@ -884,8 +881,7 @@
       "osce",
       "notificacao"
     ]
-  }
-
+  },
   {
     "id": "cm-intox-054",
     "grandeArea": "Clínica Médica",
