@@ -53,12 +53,12 @@ const DB = {
 };
 
 /* ---------- estado ---------- */
-const DEF = { newPerDay: 20, rate: 1, auto: true, area: '', assunto: '', manifestUrl: 'dados/manifesto.json' };
+const DEF = { newPerDay: 20, rate: 1, auto: true, areas: [], subs: [], assuntos: [], manifestUrl: 'dados/manifesto.json' };
 const S = {
   tab: 'hoje', cards: [], byId: new Map(), prog: new Map(), set: { ...DEF },
   stats: { d: '', n: 0, novos: 0 }, q: '', study: null, detail: null, syncing: false, lastSync: 0, dl: null, showScript: false
 };
-const loadSettings = () => { try { Object.assign(S.set, JSON.parse(localStorage.getItem('md.set') || '{}')); } catch (e) { /* sem storage */ } };
+const loadSettings = () => { try { const o = JSON.parse(localStorage.getItem('md.set') || '{}'); if (o.area && !o.areas) o.areas = [o.area]; delete o.area; delete o.assunto; Object.assign(S.set, o); } catch (e) { /* sem storage */ } };
 const saveSettings = () => { try { localStorage.setItem('md.set', JSON.stringify(S.set)); } catch (e) { /* ignora */ } };
 
 function toast(msg, ms = 2600) {
@@ -77,7 +77,7 @@ function normCard(r, source) {
   if (!Array.isArray(tags)) tags = [];
   return {
     id: String(r.id || ('imp-' + hash(frente + verso))).trim(),
-    grandeArea: String(r.grandeArea || 'Sem área').trim(), subarea: String(r.subarea || '').trim(),
+    grandeArea: String(r.grandeArea || 'Sem área').trim(), subarea: String(r.subarea || 'Geral').trim(),
     assunto: String(r.assunto || 'Geral').trim(), titulo: String(r.titulo || '').trim(),
     frente, verso, roteiroAudio: String(r.roteiroAudio || '').trim(), audioUrl: String(r.audioUrl || '').trim(),
     tags: tags.map(t => String(t).trim()).filter(Boolean), source
@@ -98,7 +98,7 @@ function parseCSV(text) {
   }
   row.push(f); if (row.some(x => x.trim())) rows.push(row);
   if (rows.length < 2) return [];
-  const map = { grandearea: 'grandeArea', area: 'grandeArea', subarea: 'subarea', assunto: 'assunto', titulo: 'titulo', frente: 'frente', pergunta: 'frente', verso: 'verso', resposta: 'verso', roteiroaudio: 'roteiroAudio', roteiro: 'roteiroAudio', audiourl: 'audioUrl', audio: 'audioUrl', tags: 'tags', id: 'id' };
+  const map = { grandearea: 'grandeArea', area: 'grandeArea', subarea: 'subarea', assuntogeral: 'subarea', assunto: 'assunto', assuntoespecifico: 'assunto', titulo: 'titulo', frente: 'frente', pergunta: 'frente', verso: 'verso', resposta: 'verso', roteiroaudio: 'roteiroAudio', roteiro: 'roteiroAudio', audiourl: 'audioUrl', audio: 'audioUrl', tags: 'tags', id: 'id' };
   const keys = rows[0].map(h => map[norm(h).replace(/[^a-z]/g, '')] || null);
   return rows.slice(1).map(r => { const o = {}; keys.forEach((k, i) => { if (k) o[k] = r[i]; }); return o; });
 }
@@ -117,11 +117,9 @@ async function upsertCards(list, source, replaceRepo) {
   return uniq.length;
 }
 async function reloadCards() {
-  S.cards = (await DB.all('cards')).sort((a, b) => a.grandeArea.localeCompare(b.grandeArea) || a.assunto.localeCompare(b.assunto) || a.id.localeCompare(b.id));
+  S.cards = (await DB.all('cards')).sort((a, b) => a.grandeArea.localeCompare(b.grandeArea) || subOf(a).localeCompare(subOf(b)) || a.assunto.localeCompare(b.assunto) || a.id.localeCompare(b.id));
   S.byId = new Map(S.cards.map(c => [c.id, c]));
-  const areas = new Set(S.cards.map(c => c.grandeArea));
-  if (S.set.area && !areas.has(S.set.area)) { S.set.area = ''; S.set.assunto = ''; }
-  if (S.set.assunto && !S.cards.some(c => c.assunto === S.set.assunto && (!S.set.area || c.grandeArea === S.set.area))) S.set.assunto = '';
+  pruneSel();
   buildQueue();
 }
 
@@ -192,7 +190,7 @@ async function loadStats() {
 }
 const filtered = () => {
   const q = norm(S.q);
-  return S.cards.filter(c => (!S.set.area || c.grandeArea === S.set.area) && (!S.set.assunto || c.assunto === S.set.assunto) &&
+  return S.cards.filter(c => matchSel(c) &&
     (!q || norm([c.titulo, c.frente, c.verso, c.assunto, c.subarea, c.tags.join(' ')].join(' ')).includes(q)));
 };
 function counts() {
@@ -219,11 +217,28 @@ function render() {
   updateAudioUI();
   if (S.tab === 'ajustes') audioStats();
 }
+const subOf = c => c.subarea || 'Geral';
+const matchSel = (c, lv = 3) => (!S.set.areas.length || S.set.areas.includes(c.grandeArea)) &&
+  (lv < 2 || !S.set.subs.length || S.set.subs.includes(subOf(c))) && (lv < 3 || !S.set.assuntos.length || S.set.assuntos.includes(c.assunto));
+const uniq = a => [...new Set(a)];
+function options() {
+  const A = uniq(S.cards.map(c => c.grandeArea));
+  const B = uniq(S.cards.filter(c => matchSel(c, 1)).map(subOf));
+  const C = uniq(S.cards.filter(c => matchSel(c, 2)).map(c => c.assunto));
+  return [A, B, C];
+}
+function pruneSel() { // remove seleções que deixaram de existir (cascata: área → assunto geral → assunto específico)
+  const [A] = options(); S.set.areas = S.set.areas.filter(x => A.includes(x));
+  const B = options()[1]; S.set.subs = S.set.subs.filter(x => B.includes(x));
+  const C = options()[2]; S.set.assuntos = S.set.assuntos.filter(x => C.includes(x));
+}
 function filterBlock() {
-  const areas = [...new Set(S.cards.map(c => c.grandeArea))];
-  const ass = [...new Set(S.cards.filter(c => !S.set.area || c.grandeArea === S.set.area).map(c => c.assunto))];
-  return `<div class="grid2"><div><label class="f" for="fArea">Grande área</label><select id="fArea" data-change="area"><option value="">Todas</option>${areas.map(a => `<option ${a === S.set.area ? 'selected' : ''}>${esc(a)}</option>`).join('')}</select></div>
-  <div><label class="f" for="fAss">Assunto</label><select id="fAss" data-change="assunto"><option value="">Todos</option>${ass.map(a => `<option ${a === S.set.assunto ? 'selected' : ''}>${esc(a)}</option>`).join('')}</select></div></div>`;
+  const [A, B, C] = options(), sel = S.set;
+  const lv = (n, title, list, chosen) => `<div class="fl"><div class="fl-h"><label class="f">${title}</label><span class="mute small">${chosen.length ? chosen.length + ' selecionado' + (chosen.length > 1 ? 's' : '') : 'todos'}</span></div>
+    <div class="chips-f">${list.map(v => `<button class="fc ${chosen.includes(v) ? 'on' : ''}" data-act="fchip" data-lv="${n}" data-v="${esc(v)}" aria-pressed="${chosen.includes(v)}">${esc(v)}</button>`).join('') || '<span class="mute small">—</span>'}</div></div>`;
+  const any = sel.areas.length || sel.subs.length || sel.assuntos.length;
+  return `${lv(1, 'Grande área', A, sel.areas)}${lv(2, 'Assunto geral', B, sel.subs)}${lv(3, 'Assunto específico', C, sel.assuntos)}
+  ${any ? '<button class="btn alt sm" style="margin-top:12px" data-act="fclear">Limpar filtros</button>' : ''}`;
 }
 function emptyLib() {
   return `<div class="card empty"><b>Nenhum card ainda</b>${S.syncing ? 'Carregando conteúdo…' : 'Sincronize com o repositório ou importe um arquivo .json / .csv em Ajustes.'}
@@ -255,12 +270,14 @@ function vHoje() {
 function vBiblioteca() {
   if (!S.cards.length) return emptyLib();
   const f = filtered(), g = {};
-  f.forEach(c => { ((g[c.grandeArea] ||= {})[c.assunto] ||= []).push(c); });
-  const open = S.q || Object.keys(g).length === 1;
-  return `<section class="card">${filterBlock()}<div style="margin-top:10px"><label class="f" for="qIn">Buscar</label><input type="search" id="qIn" data-input="q" placeholder="Título, pergunta, tag…" value="${esc(S.q)}" autocomplete="off" autocapitalize="off"></div></section>
+  f.forEach(c => { (((g[c.grandeArea] ||= {})[subOf(c)] ||= {})[c.assunto] ||= []).push(c); });
+  const open = !!(S.q || S.set.areas.length || S.set.subs.length || S.set.assuntos.length) || Object.keys(g).length === 1;
+  const item = c => { const [t, cl] = status(c); return `<button class="item" data-act="detail" data-id="${esc(c.id)}"><span class="t">${esc(c.titulo || c.frente)}</span><span class="pill ${cl}">${t}</span></button>`; };
+  const n = o => Object.values(o).reduce((x, y) => x + (Array.isArray(y) ? y.length : n(y)), 0);
+  return `<section class="card">${filterBlock()}<div style="margin-top:14px"><label class="f" for="qIn">Buscar</label><input type="search" id="qIn" data-input="q" placeholder="Título, pergunta, tag…" value="${esc(S.q)}" autocomplete="off" autocapitalize="off"></div></section>
   <div class="sec">${f.length} card${f.length === 1 ? '' : 's'}</div>
-  ${f.length ? Object.entries(g).map(([a, as]) => Object.entries(as).map(([s, cs]) => `<details class="grp" ${open ? 'open' : ''}><summary><span style="min-width:0;overflow-wrap:anywhere"><span class="eyebrow">${esc(a)}</span><br>${esc(s)}</span><small>${cs.length}</small></summary>
-    ${cs.map(c => { const [t, cl] = status(c); return `<button class="item" data-act="detail" data-id="${esc(c.id)}"><span class="t">${esc(c.titulo || c.frente)}<small>${esc(c.subarea || c.assunto)}</small></span><span class="pill ${cl}">${t}</span></button>`; }).join('')}</details>`).join('')).join('') : '<div class="card empty"><b>Nada encontrado</b>Ajuste a busca ou os filtros.</div>'}`;
+  ${f.length ? Object.entries(g).map(([a, subs]) => `<details class="grp" ${open ? 'open' : ''}><summary><span style="min-width:0;overflow-wrap:anywhere">${esc(a)}</span><small>${n(subs)}</small></summary>
+    ${Object.entries(subs).map(([sb, as]) => `<div class="subh">${esc(sb)}</div>${Object.entries(as).map(([as1, cs]) => `<details class="grp in" ${open ? 'open' : ''}><summary><span style="min-width:0;overflow-wrap:anywhere">${esc(as1)}</span><small>${cs.length}</small></summary>${cs.map(item).join('')}</details>`).join('')}`).join('')}</details>`).join('') : '<div class="card empty"><b>Nada encontrado</b>Ajuste a busca ou os filtros.</div>'}`;
 }
 
 function vAjustes() {
@@ -311,7 +328,7 @@ function renderStudy() {
   }
   const p = getProg(c.id), rt = [0, 1, 2, 3];
   sh.innerHTML = `<div class="sh-top"><button class="x" data-act="close" aria-label="Fechar">${ic.x}</button><div class="bar"><i style="width:${Math.round(st.i / st.q.length * 100)}%"></i></div><div class="cnt">${st.i + 1}<span class="mute" style="font-size:14px">/${st.q.length}</span></div></div>
-  <div class="sh-body"><article class="card"><div class="eyebrow">${esc(c.grandeArea)} · ${esc(c.assunto)}</div>
+  <div class="sh-body"><article class="card"><div class="eyebrow">${esc(c.grandeArea)} › ${esc(subOf(c))} › ${esc(c.assunto)}</div>
     ${c.titulo ? `<div class="ttl">${esc(c.titulo)}</div>` : ''}<div class="front">${esc(c.frente)}</div>
     ${st.show ? `<div class="ans">${esc(c.verso)}</div>${c.tags.length ? `<div class="tags">${c.tags.map(t => `<span class="pill">#${esc(t)}</span>`).join('')}</div>` : ''}` : ''}
   </article>${st.show ? `<button class="btn alt" data-act="speak" data-id="${esc(c.id)}">${ic.spk} Ouvir explicação</button>` : ''}</div>
@@ -335,7 +352,7 @@ function openDetail(id) {
   const c = S.byId.get(id); if (!c) return;
   S.detail = id; const [t, cl] = status(c), p = getProg(id);
   $('#sheet').innerHTML = `<div class="sh-top"><button class="x" data-act="close" aria-label="Fechar">${ic.x}</button><div class="eyebrow" style="flex:1">${esc(c.id)}</div><span class="pill ${cl}">${t}</span></div>
-  <div class="sh-body"><article class="card"><div class="eyebrow">${esc(c.grandeArea)}${c.subarea ? ' · ' + esc(c.subarea) : ''} · ${esc(c.assunto)}</div>
+  <div class="sh-body"><article class="card"><div class="eyebrow">${esc(c.grandeArea)} › ${esc(subOf(c))} › ${esc(c.assunto)}</div>
   ${c.titulo ? `<h2 style="font-size:20px;margin-top:8px;letter-spacing:-.02em">${esc(c.titulo)}</h2>` : ''}
   <div class="front" style="font-size:19px">${esc(c.frente)}</div><div class="ans">${esc(c.verso)}</div>
   ${c.roteiroAudio ? `<div class="eyebrow" style="margin-top:18px">Roteiro de áudio</div><div class="script" style="border:0;margin-top:6px;padding-top:0">${esc(c.roteiroAudio)}</div>` : ''}
@@ -444,7 +461,7 @@ function speakOne(id) {
 function setBar() { const b = $('#aBar'); if (b) b.style.width = Math.round(A.pct * 100) + '%'; }
 function updateAudioUI() {
   const pb = $('#aPlay'); if (pb) { pb.innerHTML = A.playing ? ic.pause : ic.play; pb.setAttribute('aria-label', A.playing ? 'Pausar' : 'Tocar'); }
-  const c = A.cur, t = $('#aTitle'); if (t && c) { t.textContent = c.titulo || c.frente; const q = $('#aFront'); if (q) q.textContent = c.frente; const e = $('#aEye'); if (e) e.textContent = `${c.grandeArea} · ${c.assunto}`; const s = $('#aScript'); if (s) s.textContent = c.roteiroAudio || c.verso; }
+  const c = A.cur, t = $('#aTitle'); if (t && c) { t.textContent = c.titulo || c.frente; const q = $('#aFront'); if (q) q.textContent = c.frente; const e = $('#aEye'); if (e) e.textContent = `${c.grandeArea} › ${subOf(c)} › ${c.assunto}`; const s = $('#aScript'); if (s) s.textContent = c.roteiroAudio || c.verso; }
   const n = $('#aPos'); if (n) n.textContent = A.single ? 'Faixa avulsa' : `${A.i + 1} de ${A.q.length}`;
   document.querySelectorAll('[data-qi]').forEach(b => b.classList.toggle('cur', +b.dataset.qi === A.i && !A.single));
   setBar();
@@ -523,6 +540,8 @@ document.addEventListener('click', async e => {
   const a = el.dataset.act, id = el.dataset.id;
   switch (a) {
     case 'tab': setTab(el.dataset.tab); break;
+    case 'fchip': { const key = ['', 'areas', 'subs', 'assuntos'][+el.dataset.lv], v = el.dataset.v, a = S.set[key], i = a.indexOf(v); if (i >= 0) a.splice(i, 1); else a.push(v); pruneSel(); saveSettings(); buildQueue(); render(); break; }
+    case 'fclear': S.set.areas = []; S.set.subs = []; S.set.assuntos = []; saveSettings(); buildQueue(); render(); break;
     case 'sync': syncRepo(false); break;
     case 'import': $('#fileIn').click(); break;
     case 'restore': $('#bkIn').click(); break;
@@ -552,12 +571,9 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const k = e.target.dataset.change; if (!k) return;
-  if (k === 'area') { S.set.area = e.target.value; S.set.assunto = ''; }
-  else if (k === 'assunto') S.set.assunto = e.target.value;
-  else if (k === 'npd') { S.set.newPerDay = Math.max(0, Math.min(500, parseInt(e.target.value, 10) || 0)); }
+  if (k === 'npd') { S.set.newPerDay = Math.max(0, Math.min(500, parseInt(e.target.value, 10) || 0)); }
   else if (k === 'mu') { S.set.manifestUrl = e.target.value.trim() || DEF.manifestUrl; }
   saveSettings();
-  if (k === 'area' || k === 'assunto') { buildQueue(); }
   render();
 });
 document.addEventListener('input', e => { if (e.target.dataset.input === 'q') { S.q = e.target.value; render(); } });
